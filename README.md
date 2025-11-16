@@ -13,7 +13,7 @@ present in the Plots directory.
 
 The report pdf is in the Report directory.
 
-The PyMC models are in the model_definitions module.
+The PyMC models are in the models_definitions module.
 
 (The results analysis code is in the Analysis folder, the data processing code is in Data_Processing, 
 the code for the simulation is in the Simulation folder.)
