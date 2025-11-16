@@ -8,7 +8,7 @@ To run the models needed for the Analysis and the Simulation one can just run ru
 to generate the artificial simulated dataset, all the datasets should already be present in PYMC_input_data).
 
 The fitting results files are not present because they exceeded GitHub file limit, but all the plots regarding the 
-analysis(PPC, convergence, ecc..), the data visualization and the simulation related figures are all already 
+analysis(PPC, convergence, etc..), the data visualization and the simulation related figures are all already 
 present in the Plots directory.
 
 The report pdf is in the Report directory.
