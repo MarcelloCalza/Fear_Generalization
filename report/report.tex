@@ -1,0 +1,915 @@
+\documentclass[12pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage[backend=biber,style=authoryear,url=true,doi=true,sorting=none ]{biblatex}
+\addbibresource{references.bib}
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\small,
+  columns=fullflexible,
+  breaklines=true,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{teal}
+}
+
+
+\setcounter{secnumdepth}{3}
+
+\title{Conditioned fear generalization}
+\author{Marcello Calza}
+
+\begin{document}
+\maketitle
+
+\section{Neurobiology of Fear Generalization}
+
+\subsection{Introduction to Fear Generalization}
+Fear generalization is a psychological phenomenon where a response to a specific stimulus is extended to similar stimuli. This can be categorized into positive and negative generalizations:
+\begin{itemize}
+    \item \textbf{Positive Generalization:} This occurs when the fear response to a threat conditioned stimulus (\texttt{CS+}) extends to other stimuli that closely resemble the \texttt{CS+}. It involves increasing activation of a subsets of brain regions to cues with increasing similarity to the \texttt{CS+}. These regions are sensitive to threat cues, facilitating a rapid response to potential dangers.
+    \item \textbf{Negative Generalization:} In contrast, negative generalization involves a decreased fear response as the similarity to the \texttt{CS+} decreases. This is characterized by a subset of brain regions with activation peaking to a safety conditioned stimuli (\texttt{CS-}), and diminishing to cues with increasing similarity to the \texttt{CS+}. These regions are responsible of evaluating and inhibiting fear responses, providing a more measured approach to less threatening or neutral stimuli.
+\end{itemize}
+
+\subsubsection{Methodology for Identifying Relevant Neural Substrates}
+Functional magnetic resonance imaging (fMRI) studies have been pivotal in mapping the neural substrates of fear generalization. This method allows researchers to observe brain activity and identify regions involved in the generalization process by tracking changes in blood flow associated with neuronal activity during exposure to various stimuli.
+
+\subsubsection{A Meta-analytic Study to Investigate Fear Generalization}
+The study conducted by \textcite{WEBLER2021421} provides the first coherent meta-analysis of fMRI investigations of neural substrates involved in conditioned fear generalization in humans. In the study, by leveraging datasets's statistical parametric maps (SPMs), the Seed-based d Mapping with Permutation of Subject Images (SDM-PSI) neuroimaging method is used to produce voxel brain maps of activations forming, both linear and quadratic positive and linear negative generalization gradients for a total of six different studies. \\ 
+All the studies used in the meta-analysis were conducted in healthy humans, an adversive stimulus (a shock) was used as an unconditioned stimulus (\texttt{US}) for the \texttt{CS+}, but a safety conditioned stimulus (\texttt{CS-}) was not allways present and the number of \texttt{CS+} and general stimuli presentations varied across studies. This meta-analysis work effectively summarizes the neural substrates of positive and negative conditioned generalization and provides important insights regarding the subject, as well as a neural model of fear generalization informed by the study results.
+
+\subsection{Neural Substrates of Positive Fear Generalization}
+Thanks to \textcite{WEBLER2021421} and other recent studies' findings it is possible to pin down the brain regions involved in conditioned positive fear generalization, along with their specific roles and interactions.
+
+\subsubsection{Cingulo-opercular Network}
+This network is crucial for maintaining alertness, directing attention towards relevant events (like potentially conditioned stimuli), and optimizing responses to such events. Furthermore it is probable that two nodes of this network may be linked to unique positive generalization processes: 
+\begin{itemize}
+    \item the \textbf{Anterior Insula (AI)} has been linked to interoceptive awareness when it comes to fear, so the activation of AI related to positive generalization may indicate an increasing conscious awareness that the body is in an axious state, given the presented possible threat reflected by stimuli that are similar to the \texttt{CS+}.
+    \item Instead, the \textbf{dorsal Anterior Cingulate Cortex (dACC)} and the adjacent dmPFC, have been found to have a role in risk analysis when it comes to fear response, so their observed activation linked to positive generalization could be caused by rising levels of perceived risk due to presentations of stimuli with increasing similarity to the \texttt{CS+}.
+\end{itemize}
+
+\subsubsection{Frontoparietal Network}
+This network is involved in multiple cognitive functions such as attention, cognitive control and emotional regulation that could be linked to positive fear generalization. Two frontoparietal brain regions in specific have been found to have greater activation as a presented stimuli increases in \texttt{CS+} resemblance:  
+\begin{itemize}
+    \item the \textbf{Lateral Prefrontal Cortex (lPFC)} engagement could be caused by an increase in cognitive load due to anxiety-driven growing attention to stimuli similar to the \texttt{CS+} combined with the necessity of completing experiment related tasks (like attending stimuli and giving fear ratings). A second possible cause of lPFC increased activation associated with positive generalization could be its attempt to down-regulate negative emotions such as fear through inhibition of subcortical brain regions like the amygdala fear network. 
+    \item The \textbf{Inferior Parietal Lobule (IPL)} has been found to be implicated in the retrieval of semantic and episodic memory, with its function involving stimulus driven attentional shift towards salient external events, therefore its increased activation related to positive generalization may be the result of attentional shifting towards external stimuli with increasing similarity to the \texttt{CS+}, or towards internal presentations of the \texttt{CS+} triggered by the displaying of the stimuli.
+\end{itemize}
+
+\subsubsection{Brainstem Nuclei}
+The brainstem loci has an important role in the production of autonomic and behavioral responses to salient stimuli, and three brainstem nuclei have shown to be possibly involed in positive fear generalization:
+\begin{itemize}
+    \item the \textbf{Locus Coeruleus (LC)} regulates autonomic arousal, attentional orienting and learning via noradrenaline transmission to various brain regions, that include a projection that extends to the hippocampus, where the noradrenergic signaling affects plasticity causing the retrieval of threat related memories. Therefore LC activation related to positive fear generalization may be caused by presentations of stimuli similar to the \texttt{CS+}, which increase attention arousal and trigger the retrieval of the \texttt{CS+} memory trace.        
+    \item The \textbf{Periaqueductal Gray (PAG)} is involved in defensive behaviors in response to threat, thus its growth in activation as presneted stimuli increase in similarity to the \texttt{CS+} may be caused by the PAG preparing the body for potential danger.
+    \item The \textbf{Ventral Tegmental Area (VTA)} is related to the reward system and motivational aspects of fear learning, modulating behavioral responses to fear-relevant stimuli. Its increased activation associated with positive fear generalization may be caused by unexpected omission of the \texttt{US} during unreinforced \texttt{CS+} and similar stimuli presentations, which could generate VTA-mediated positive prediction error, which can effectively increase safety learning by updating stimuli-US assocations.
+\end{itemize}
+
+\subsubsection{Striatal-thalamic Areas}
+These areas are associated with habit formation and procedural learning, they are involved in a circuit that enables the selection and execution of motivated behaviors:
+\begin{itemize}
+    \item the \textbf{Striatal nuclei}, including the caudate, are responsible of forming the input for the circuit and signaling if a specific action should be executed or inhibited.
+    \item The \textbf{Thalamic nuclei}, mainly motoric ventral lateral (VLN) and ventral anterior (VAN) nuclei, are then disinhibited to execute the actions selected by the striatal nuclei. 
+\end{itemize}
+The engagement of these areas linked to positive fear generalization may be caused by increased threat response actions selection and/or execution, which reflect defensive readiness to potentially dangerous stimuli.  \\
+Additionally, a thalamic nuclei, the pulvinar, has been implicated in the processing of salient visual information, and has been found to possibly form a rapid pulvinar-amygdala visual pathway. Therefore positive fear generalization activation of this nuclei may also reflect increased visual processing of the \texttt{CS+} and similarly close stimuli and the formation of a thalamic-amygdala threath processing circuit.
+
+\subsection{Neural Substrates of Negative Fear Generalization}
+Thanks to the studies it is also possible to identify the brain regions involved in conditioned negative fear generalization, which have an activation pattern that decreases as presentations of stimuli increase in \texttt{CS+} similarity, and grows as the stimuli become more distinguishable from the \texttt{CS+}, peaking in activation to the safety conditioned stimulus \texttt{CS-} (if present).
+
+\subsubsection{Default Mode Network}
+This network is generally involved in self-referential mentation, retrospective, prospective memory, and safety responding in threatening contexts. Some default mode nodes in specific showed negative fear generalization effects: 
+\begin{itemize}
+    \item the \textbf{Ventromedial Prefrontal Cortex (vmPFC)} anterior parts are responsible of tracking value of anticipated outcomes, meanwhile the posterior parts of the vmPFC manage inhibition of fear. Therefore the negative generalization effects in vmPFC may result from stimuli with decreasing \texttt{CS+} similarity causing increased positive valuation and fear inhibitory responses, that degrade as the stimuli increase in \texttt{CS+} resemblance. 
+    \item The \textbf{Middle Temporal Gyrus (MTG) and Angular Gyrus (AG)} are involved in the retrieval of episodic memories, in dynamic self-referencing and in safety related processes, thus their activation associated with negative fear generalization may result from presentations of stimuli with decreasing \texttt{CS+} resemblance causing less disruption of internal mentation and increasing toughts of security and relief.
+    \item The \textbf{Anterior Hippocampus} is tought to play a central role in pattern completion, but is also responsible for pattern separation, thus its engagement related to negative fear generalization may be caused by presentations of stimuli with weak \texttt{CS+} resemblance triggering a strong hippocampally mediated pattern separation of themselves and \texttt{CS+} internal representations.    
+\end{itemize}
+
+\subsubsection{Amygdala}
+While typically associated with fear processing, in the \textcite{WEBLER2021421} meta analysis (and so in all the analysed studies) the amygdala showed increased activation as presented stimuli decreased in \texttt{CS+} similarity, therefore showing negative fear generalization effects, that may reflect activity of basolateral amygdala neurons implicated in reward and inhibitory safety learning, or GABAergic cells, which inhibit threat related amygdala outputs. It is also worth mentioning that the absence of amygdala positive fear generalization effects may be caused by the multiple exposures to the \texttt{CS+} during learning trials, that may have caused fMRI repetition suppression, reducing the proportion of threat-sensitive amygdala neurons during the generalization phase of the experiments.  
+
+\subsection{Interaction Between Brain Regions}
+Thanks to the updated neural account of fear generalization, in the meta-analytic study, \textcite{WEBLER2021421} are also able to provide a better explanation on how the interactions between the regions determine the balance of fear response and inhibition. \\
+Based on the \textcite{WEBLER2021421} neurobiological model, the sensory information generated by exposures to stimuli resembling the \texttt{CS+} activates the \textbf{thalamus} which initiates two "roads":
+\begin{itemize}
+    \item through the "low road" the \textbf{thalamus} signals the threat-related \textbf{amygdala} circuits, triggering activity across subcortical (\textbf{LC}, \textbf{PAG}) and cortical (\textbf{AI}, \textbf{dmPFC}) regions of the network. Furthermore, "low road" mechanisms, likely through projections from the \textbf{basolateral amygdala (BLA)} and \textbf{LC} and \textbf{LC} activation by the \textbf{central nucleus of the amygdala (CeA)}, engage \textbf{CA1 and CA3 hyppocampal subfields}, effectively inducing the \textbf{hyppocampus} towards pattern completion. 
+    \item Afterwards, the "high road" generates fine-grained visual rappresentations of the stimuli which reach the \textbf{hyppocampus}, where their overlap with the previously encoded internal image of the \texttt{CS+} is assested. 
+\end{itemize}
+With enough stimuli/\texttt{CS+} overlap and stimuli-evoked \textbf{LC-CA3}, \textbf{BLA-CA1} signaling the hyppocampus initiates pattern completion resulting in the activation of all the brain regions that showed positive fear generalization effects: structures associated with fear excitation (\textbf{AI}, \textbf{dmPFC}, \textbf{PAG}, \textbf{LC}), and subsequently regions involved in attentional and excitatory control (\textbf{IPL}, \textbf{lPFC}). However, one component of the positive fear generalization group, the \textbf{VTA}, that is responsible for safety learning and reduction of generalized fear, is likely to activate only in response of a stimuli presentation followed by \texttt{US} omission.
+In the case of an insufficient synergy between stimuli/\texttt{CS+} overlap and \textbf{LC-CA3/BLA-CA1} signaling, dentate gyrus neurons initiate pattern separation in the \textbf{hyppocampus}, resulting in the activation of structures involved in negative fear generalization (\textbf{vmPFC}, \textbf{MTG}, \textbf{AG}), that effectively attenuate activity in the amygdala fear-networks. 
+\section{Background and Experiments of the Statistical Model}
+
+\subsection{Model Overview}
+The statistical model developed by \textcite{Yu2023} represents a significant advance in understanding the individual differences and the various processes involved in fear generalization. By leveraging a \emph{Bayesian multilevel mixture model}, the research aims to disentangle the latent mechanisms that contribute to these differences, moving beyond traditional generalization research which often describes fear generalization as a static-like system, and focuses solely on overall-level behaviors.
+The model is peculiar for four main reasons:
+\begin{enumerate}
+    \item it employs \emph{Bayesian statistics} to characterize the uncertainty about the parameters as probability distributions, while making the most of the available evidence. 
+    \item It has a \emph{multilevel structure} to take into account the individual differences by inferring parameters values both from the individual and group levels.
+    \item It considers the generalization behaviour as a \emph{dynamic system} which could emerge from several different processes, like learning, perception and generalization.
+    \item It incorporates a \emph{mixture framework} that allows to allocate participants into potential clinical relevant groups: \emph{Non-Learners}, \emph{Overgeneralizers}, \emph{Physical Generalizers} and \emph{Perceptual Generalizers}.    
+\end{enumerate}
+In syntesis, while traditional approaches to studying fear generalization have predominantly relied on descriptive statistics and assumed a single generalization mechanism across all individuals, this model challenges that assumption by considering the variability and individual differences that influence generalization behaviors, which can be crucial for understanding related psychopathologies such as anxiety disorders, autism, and obsessive-compulsive disorder.
+
+\subsection{Experimental Design}
+\subsubsection{General Setup}
+The model is based on data from two fear generalization experiments. These experiments involved various trials during which different levels of stimuli (circles of various diameters) were shown to a group of 40 participants. Conditioned stimuli (\texttt{CS+} or \texttt{CS-}) were associated with the presence (for \texttt{CS+}) or the absence (for \texttt{CS-}) of an unconditioned stimulus (US, an electric shock), while test stimuli (\texttt{TS}) were circles that varied slightly from the \texttt{CS(s)} in diameter size. None of the \texttt{TS} or \texttt{CS-} trials were paired with the US, and the experiments had an \emph{acquisition phase} (learning trials) during which only \texttt{CS(s)} were shown and a \emph{generalization phase} (generalization trials) during which also \texttt{TS} were shown mixed with the \texttt{CS(s)}. Such designs help to capture how subjects generalize their conditioned fear responses to new stimuli that are not exactly the same as the original stimulus.
+
+\subsubsection{Specifics of the Experiments}
+\begin{itemize}
+    \item \textbf{Experiment 1 Simple Conditioning:} Involved \emph{simple fear conditioning} with one cue associated with the \texttt{US}. The \emph{acquisition phase} comprised 14 \texttt{CS+} trials. The \emph{generalization phase} comprised 4 blocks for a total of 174 trials, where each block, except the first one, started with 10 consecutive \texttt{CS+} trials, and comprised a total of 22 \texttt{CS+} and 24 \texttt{TS} trials. The \emph{reinforcement rate} was 50\%.
+    \item \textbf{Experiment 2 Differential Conditioning:} Used a \emph{differential fear conditioning} setup with two cues; one predicting the \texttt{US} and another indicating no US. The \emph{acquisition phase} comprised 24 trials(12 \texttt{CS+}, 12 \texttt{CS-}). The \emph{generalization phase} comprised 3 blocks for a total of 156 trials, all the blocks, except for the first one, started with 6 \texttt{CS+} trials, and comprised a total of 14 \texttt{CS+}, 8 \texttt{CS-} and 32 \texttt{TS} trials. The \emph{reinforcement rate} for the \texttt{CS+} was 83\%.
+\end{itemize}
+Both experiments were structured to capture perceptual data and \texttt{US} expectancy ratings from participants during the \emph{learning} and \emph{generalization phases}, providing a rich dataset for modeling individual differences in generalization behavior.
+
+\subsection{Linking Neural Mechanisms to the Bayesian Mixture Model}
+
+The multilevel mixture model of \textcite{Yu2023} separates \emph{learning-rate} and \emph{generalization-rate} parameters and clusters participants into four phenotypes (Non-Learners, Over-generalizers, Physical Generalizers, Perceptual Generalizers).  
+Here we speculate how the positive and negative fear-generalization substrates described earlier may serve as the biological engines that drive those parameters and phenotypes.
+
+\subsubsection{Brain circuits most likely to modulate the \emph{learning rate} during the \textit{acquisition phase}}
+
+\begin{itemize}
+    \item \textbf{Basolateral Amygdala (BLA) \& Locus Coeruleus (LC):} BLA activity, boosted by LC noradrenaline, governs the magnitude of cue-US updates; BLA-LC coupling therefore could have a part in encoding the learning curve, although these same regions are later involed in generalization decisions.
+    \item \textbf{Ventral Tegmental Area (VTA):} dopaminergic prediction-error signals update both threat and safety values; VTA could accelerate or decelerate learning depending on the surprise of US omission.
+    \item \textbf{Dorsal Striatum / Thalamo-striatal loop:} consolidates stimulus-response habits; rapid dorsal-striatal recruitment could appear as ''fast learning'' in expectancy ratings.
+    \item \textbf{Ventromedial Prefrontal Cortex (vmPFC):} exerts inhibitory control; excessive early vmPFC activation could blunt the effective learning rate, even when subcortical plasticity is intact.
+\end{itemize}
+
+\subsubsection{Brain circuits most likely to modulate the \emph{generalization rate} during the \textit{generalization phase}}
+
+\begin{itemize}
+    \item \textbf{Anterior Hippocampus (pattern completion) vs.~Dentate Gyrus (pattern separation):} during generalization trials, completion-biased dynamics widen the gradient, whereas separation-biased dynamics sharpen it.
+    \item \textbf{Anterior Insula (AI) \& dACC/dmPFC:} heighten interoceptive threat awareness and risk appraisal; stronger AI/dACC activity across similar pairings could translates into a steeper generalization rate.
+    \item \textbf{Pulvinar $\rightarrow$ Amygdala ''low-road'':} coarse, fast visual routing favors generalization on the basis of gross physical similarity.
+    \item \textbf{Default-Mode Network nodes (vmPFC, MTG, Angular Gyrus):} supply safety/value context; safety-valuation signals arrving during the generalization phase sharpen discrimination and thus lower the generalization rate.
+\end{itemize}
+
+\subsubsection{Prossible neural profiles of the model's four participant groups}
+
+\paragraph{Non-Learners}  
+\begin{itemize}
+    \item Hypo-activation of BLA, LC, and VTA \(\Rightarrow\) weak associative strengths ancoding.  
+    \item Dominant hippocampal pattern separation and early vmPFC inhibition yield a flat, narrow gradient around both \texttt{CS+} and \texttt{CS-}.
+\end{itemize}
+
+\paragraph{Overgeneralizers}  
+\begin{itemize}
+    \item Hyper-reactive LC-BLA bursts heightening the generalization.  
+    \item Sustained AI and dACC/dmPFC activity across the stimulus continuum drives a broad, steep generalization gradient.
+    \item Completion-biased hippocampus plus weak DMN safety gating spread fear toward \texttt{CS-}-like stimulus \emph{and} relief toward \texttt{CS+} omissions, giving a broad, bidirectional gradient.
+\end{itemize}
+
+\paragraph{Physical Generalizers}  
+\begin{itemize}
+    \item Strong pulvinar-amygdala ''low-road'' gating plus heightened visual-association cortex activity bias decisions toward external, metric similarity.  
+    \item Hippocampal completion is engaged only when physical overlap is large, producing a narrow but high-magnitude generalization curve around the \texttt{CS+}.
+\end{itemize}
+
+\paragraph{Perceptual Generalizers}  
+\begin{itemize}
+    \item Greater reliance on internally generated stimulus templates (anterior hippocampus, vmPFC, MTG); completion can occur despite weak physical overlap.  
+    \item LC-hippocampal bursts triggered by imagery or expectancy amplify associative spread, while vmPFC safety gating lags, producing diffuse but moderate generalization.
+\end{itemize}
+
+\subsection{Mathematical Formulations by Group}
+
+\subsubsection{Introduction}
+To explain the model a coordinate system will be used, where \textbf{i} indicates participant i and \textbf{j} indicates trial j in the dataset. Furthermore a \textbf{\(\bm{\pm}\)} notation will be used to indicate those parameters which need to be computed for both \texttt{CS+} and \texttt{CS-} in case of a \emph{differential conditioning} setup (like in experiment 2).
+\subsubsection{Latent Group Indicator (\(\bm{m_i}\))}
+Most of the equations and priors of the model are conditioned on the discrete \textbf{Latent Group Indicator \(\bm{m_i} (m_i = 1,2,3,4)\)}, which indicates the group membership for participant i:
+\[
+\scalebox{0.9}{$
+\begin{gathered}
+\scalebox{1.111}{$m_i \sim \text{Multinomial}(1,\pi_1,\pi_2,\pi_3,\pi_4)$} \\
+\text{where\ } \pi_1,\pi_2,\pi_3,\pi_4 \sim \text{Dirichlet}(c(1,1,1,1)) \text{\ with\ } \sum_{i=1}^4 \pi_i = 1 \text{\ are the group probabilities.}
+\end{gathered}
+$}
+\]
+The four latent groups, which correspond to the labels 1, 2, 3 and 4 respectively, are: \emph{Non-Learners}, \emph{Overgeneralizers}, \emph{Physical Generalizers} and \emph{Perceptual Generalizers}.
+
+\subsubsection{Learning Rate (\(\bm{\alpha_i}\)) and Generalization Rate (\(\bm{\lambda_i}\))}
+The \textbf{Learning Rate \(\bm{\alpha_i}\)} describes how quickly an individual updates their understanding based on new information:
+\[
+\scalebox{0.9}{$
+\begin{gathered}
+\scalebox{1.111}{$\alpha_i =$} \begin{cases} 
+\scalebox{1.111}{$0$} & \text{for Non-Learners, who do not adapt their responses,} \\
+\scalebox{1.111}{$\text{Beta}(a_{\alpha}, k_{\alpha})$} & \text{for Overgeneralizers, Physical and Perceptual Generalizers,}
+\end{cases} \\
+\text{where \(a_{\alpha} = \mu_{\alpha} \cdot k_{\alpha}\) and \(b_{\alpha} = (1 - \mu_{\alpha}) \cdot k_{\alpha}\) with \(\mu_{\alpha} \sim \text{Beta}(1,1)\) and \(k_{\alpha} \sim \text{Uniform}(1,10)\).}
+\end{gathered}
+$}
+\]
+The larger the \emph{learning rate} is, the greater the amount of learning will be for a given prediction error.\\
+The \textbf{Generalization Rate \(\bm{\lambda_i}\)} reflects the generalization propensity of an individual:
+\[
+\scalebox{0.9}{$
+\begin{gathered}
+\scalebox{1.111}{$\lambda_i =$} \begin{cases} 
+\scalebox{1.111}{$0$} & \text{for Non-Learners, indicating no generalization,} \\
+\scalebox{1.111}{$\text{Normal}(\mu_{\lambda}, \sigma_{\lambda}^2) \text{ truncated at } [0, 0.0052]$} & \text{for Overgeneralizers, who tend to generalize broadly,} \\
+\scalebox{1.111}{$\text{Normal}(\mu_{\lambda}, \sigma_{\lambda}^2) \text{ truncated at } [0.0052, \infty]$} & \text{for Physical and Perceptual Generalizers,}
+\end{cases} \\
+\text{with \(\mu_{\lambda} \sim \text{Normal}(0.1,1)\) truncated at \([0,\infty]\) and \(\sigma_{\lambda} \sim \text{Uniform}(10^{-9},1)\).}
+\end{gathered}
+$}
+\]
+The \emph{generalization rate} will be used as a decay parameter, so smaller values of \(\lambda_{i}\) indicate a stronger generalization propensity.
+
+\subsubsection{Stimulus Similarity (\(\bm{s_{ij}^{\pm}}\)) and Distance (\(\bm{d_{ij}^{\pm}}\))}
+\textbf{Stimulus Similarity \(\bm{s_{ij}^{\pm}}\)} and how it is perceived varies across groups:
+\[
+\scalebox{0.9}{$
+\scalebox{1.111}{$s_{ij}^{\pm} =$} \begin{cases}
+\scalebox{1.111}{$1$} & \begin{tabular} {@{}l@{}}
+        for Non-Learners, who perceive all stimuli as equally similar, \\
+        or for Associative Strength \(v_{ij}^{\pm}\)=0,
+    \end{tabular} \\
+\scalebox{1.111}{$e^{-\lambda_i \cdot d_{ij}^{\pm}}$} & \text{for other groups, where similarity decays exponentially with distance.}
+\end{cases}
+$}
+\]
+where the \textbf{Stimulus Distance \(\bm{d_{ij}^{\pm}}\)} itself depends on the group:
+\[
+\scalebox{0.9}{$
+\begin{gathered}
+\scalebox{1.111}{$d_{ij}^{\pm} =$} \begin{cases} 
+\scalebox{1.111}{$|x^{\text{CS}\pm} - x^{\text{TS}}_j|$} & \begin{tabular} {@{}l@{}}
+                        for Physical Generalizers and Overgeneralizers, \\ 
+                        based on absolute physical distances,
+                      \end{tabular} \\
+\scalebox{1.111}{$|\tilde{x}^{\text{CS}\pm}_{i,1,...,j} - \tilde{x}^{\text{TS}}_{ij}|$} & \text{for Perceptual Generalizers, based on absolute perceived differences,}
+\end{cases} \\
+\text{where \(x^{\text{CS}\pm}\) is the coordinate of the \(\text{CS}\pm\), \(x^{\text{TS}}_j\) is the coordinate of the TS on trial j,} \\ 
+\text{\(\tilde{x}^{\text{CS}\pm}_{i,1,...,j}\)is the perceived \(\text{CS}\pm\) until trial j and \(\tilde{x}^{\text{TS}}_{i,j}\) is the perceived TS at trial j.}
+\end{gathered}
+$}
+\]
+
+\subsubsection{Associative Strength (\(\bm{v_{ij}^{\pm}}\)) and Generalized Associative Strength (\(\bm{g_{ij}}\))}
+The \textbf{Associative Strength \(\bm{v_{ij}^{\pm}}\)} is updated based on the Rescorla-Wagner rule, for which the \emph{associative strength} of the \(\text{CS}\pm\) is determined by the individual's \emph{learning rate} \(\bm{\alpha_{i}}\) and the prediction error observed by the individual from the previous \(\text{CS}\pm\) presentation:
+\[
+\scalebox{0.9}{$
+\begin{gathered}
+\scalebox{1.111}{$v_{i,j+1}^{\pm} =$} \begin{cases} 
+\scalebox{1.111}{$0$} & \text{for Non-Learners, which do not learn,} \\
+\scalebox{1.111}{$v_{i,j}^{\pm} + \alpha_i (r_{ij}^{\pm} - v_{ij}^{\pm}) \cdot k_{ij}^{\pm}$} & \text{for all other groups,}
+\end{cases} \\ 
+\text{where \(r_{ij}^{+} \in \{0,1\}\) for CS+ and \(r_{ij}^{-} \in \{-1,0\}\) for CS- shows trials outcomes (US or no US),} \\
+\text{and \(k_{ij}^{\pm} \in \{0,1\}\) indicates when updating is happening (learning only happens during \(\text{CS}\pm\) trials).}
+\end{gathered}
+$}
+\]
+The \textbf{Generalized Associative Strength \(\bm{g_{ij}}\)} represents the interaction between \emph{associative strength} \(\bm{v_{ij}^{\pm}}\) and \emph{stimulus similarity} \(\bm{s_{ij}^{\pm}}\), crucial for calculating \texttt{US} expectancy:
+\[
+\scalebox{0.9}{$
+\scalebox{1.111}{$g_{ij} =$} \begin{cases}
+\scalebox{1.111}{$v_{ij}^{+} \cdot s_{ij}^{+}$} & \text{if only excitatory learning is involved (CS+ is the only CS),} \\
+\scalebox{1.111}{$v_{ij}^{+} \cdot s_{ij}^{+} + v_{ij}^{-} \cdot s_{ij}^{-}$} & \begin{tabular} {@{}l@{}}
+                    if both excitatory and inhibitory learning are involved \\
+                    (both CS+ and CS- are present in the stimuli).
+
+\end{tabular}                                                                                
+\end{cases}
+$}
+\]
+
+\subsubsection{Baseline Response (\(\bm{w_{0_i}}\)) and Scaling Factor (\(\bm{w_{1_i}}\))}
+The \textbf{Baseline Response \(\bm{w_{0_i}}\)} will govern the response in absence of \emph{associative strengths} \(\bm{g_{ij}}\), this parameter is normally distributed as follows:
+\[
+\scalebox{0.9}{$
+\begin{gathered}
+\scalebox{1.111}{$w_{0_i} \sim \text{Normal}(\mu_{w_0}, \sigma_{w_0}^{2})$} \\
+\text{where\ } \mu_{w_0} \sim \text{Normal}(0,10^{2})\text{, and\ }\sigma_{w_{0}} \sim \text{Half-Cauchy}(0,2).
+\end{gathered}
+$}
+\]
+The \textbf{Scaling Factor \(\bm{w_{1_i}}\)} is a parameter that will govern the mapping between the \emph{latent and observed responses}, and it is distributed as follows: 
+\[
+\scalebox{0.9}{$
+\begin{gathered}
+\scalebox{1.111}{$w_{1_i} \sim \text{Gamma}(a_{w_1}, b_{w_1})$} \\
+\text{where\ } a_{w_1} \sim \text{Half-Cauchy}(0,2) \text{, and\ } b_{w_1} \sim \text{Half-Cauchy}(0,2).
+\end{gathered}
+$}
+\]
+
+\subsubsection{US Expectancy (\(\bm{\theta_{ij}}\)) and Observable Response (\(\bm{y_{ij}}\))}
+The \textbf{US Expectancy \(\bm{\theta_{ij}}\)} is modeled as:
+\[
+\scalebox{0.9}{$
+\begin{gathered}
+\scalebox{1.111}{$\theta_{ij} = A + $}\frac{\scalebox{1.111}{$K - A$}}{\scalebox{1.111}{$1 + e^{-(w_{0_i} + w_{1_i} \cdot g_{ij})}$}} \\
+\text{with\ } A=1 \text{\ and\ } K=10 \text{\ parameters that scale and adjust the impact of} \\
+\text{generalized associative strength on US expectancy.}
+\end{gathered}
+$}
+\]
+This logistic function models the probability of expecting the \texttt{US} based on the strength of the \emph{generalized association}. \\
+The \textbf{Observable Response (\(\bm{y_{ij}}\))} is normally distributed around the expected \texttt{US} probability:
+\[
+\scalebox{1}{$
+y_{ij} \sim \text{Normal}(\theta_{ij}, \sigma^2_{m_i})
+$}
+\]
+where the parameter \(\bm{\sigma^2_{m_i}}\) regulates the amount of response noise which depends on the group:
+\[
+\scalebox{0.9}{$
+\scalebox{1.111}{$\sigma^2_{m_i} \sim$}\begin{cases}
+\scalebox{1.111}{$\text{Uniform}(1.5,3)$} & \text{for Non-Learners, for which the final response is completely random,} \\
+\scalebox{1.111}{$\text{Uniform}(10^{-9},1.5)$} & \text{for all other groups.}
+\end{cases} \\
+$}
+\]
+
+\section{Python Project}
+
+The primary objective of this project was to replicate the original \texttt{R} and JAGS workflow from the repository hosted at \href{https://osf.io/sxjak/}{osf.io/sxjak/} entirely in Python. This involved:
+
+\begin{enumerate}
+    \item \textbf{Translating \texttt{R} data-processing scripts to \texttt{Python}:} 
+          Original \texttt{R} code, which pivoted and preprocessed the experimental data, was partially reimplemented using \texttt{numpy} and \texttt{pandas} for data manipulation.
+    \item \textbf{Recreating \texttt{JAGS} models in \texttt{PyMC}:}
+          The Bayesian models for fear generalization originally built in JAGS were adapted to PyMC to enable fully Python-based inference with modern MCMC techniques.
+    \item \textbf{Translating the \texttt{R} exploratory and diagnostic visualizations to \texttt{Python}:}
+          Functions that produced data visualizations and results analysis plots in \texttt{R} were rewritten in Python, leveraging \texttt{matplotlib} and \texttt{seaborn}.
+    \item \textbf{Translating the \texttt{R} simulation of latent mechanisms to \texttt{Python}:}  
+          The illustrative \texttt{R} scripts, used to demonstrate the impact of models' latent mechanisms of fear generalization on observed behavior, were also translated to \texttt{Python}.
+    \item \textbf{Integrating additional tools:}
+          Libraries such as \texttt{arviz} were used for model diagnostics, trace plots, and posterior predictive checks, ensuring a Python-driven analysis pipeline.
+\end{enumerate}
+
+Overall, this translation preserves the fundamental statistical formulations and while taking advantage of Python's extensive data and modeling ecosystem. The following subsections elaborate on each step, beginning with the data preprocessing necessary to produce PyMC-ready input structures.
+
+\subsection{Data Preprocessing (\texttt{Data\_Preprocessing/data\_preprocessing.py})}
+\label{subsec:data_preprocessing}
+
+The already fully processed \texttt{.rds} dictionaries that were fed to JAGS in the original project implementation, couldnt be correctly loaded in Python and used as input for the PyMC models, therefore some preprocessing on the partially preprocessed \texttt{.rds} data files was needed in order to construct input dictionaries for PyMC. The data preprocessing code is largely a direct translation of the original data preprocessing \texttt{R} scripts into Python. To replicate the \texttt{R} pipeline's functionality, the following Python libraries were used:
+\begin{itemize}
+    \item \textbf{pyreadr} to load the partially preprocessed \texttt{.rds} files.
+    \item \textbf{pandas} to organize the data in \texttt{DataFrame} structures, pivot long data to wide format (and vice versa), and merge different tables.
+    \item \textbf{numpy} to facilitate array-based computations, including vectorized operations for distance calculations.
+    \item \textbf{pickle} to serialize and save the final \texttt{DataFrame} or \texttt{NumPy} array structures in \texttt{.pkl} files for later use in Bayesian modeling.
+\end{itemize}
+
+The two separate experiments, \textit{simple conditioning} and \textit{differential conditioning}, require slightly different preprocessing steps. However, both follow a common pattern:
+\begin{enumerate}
+    \item Load \texttt{.rds} files containing experiments' long format datasets and minimally clean the data (e.g.\ convert data types, ensure correct columns names and indexing).
+    \item Select and pivot into wide format (with shape \texttt{(participants, trials)}) specific columns of the datasets (e.g.\ participant's trial's \texttt{US} expectancy, trial's \texttt{US} presence, trial's stimulus size, participant's perceived trial's stimulus size, experiment's \texttt{CS} physical size)
+    \item Compute \emph{perceptual distance} and \emph{physical distance} measures for each trial of each participant.
+    \item Extract or exclude ``learning'' trials as needed for modeling variants.
+    \item Package the resulting arrays (including \texttt{US} expectancy, number of participants, and so on) into dictionaries for PyMC analysis.
+\end{enumerate}
+
+\subsubsection{Experiment~1: Simple Conditioning}
+In this experiment, we track the participant's perceived size of the conditioned stimulus (\texttt{CS+}) across trials. A \emph{moving average} of these perceptions is computed, and we then calculate the absolute difference between each trial's perception and that average (perceptual distance, \texttt{d\_per}), as well as the difference between physical stimulus sizes and a reference size (physical distance, \texttt{d\_phy}).
+
+These distance arrays (\texttt{d\_per} and \texttt{d\_phy}) alongside \texttt{US} expectancy (\texttt{y}) are then organized, optionally including reinforcement (\texttt{r}) and indicator arrays (\texttt{k}). The function \texttt{data\_input\_s1} combines all arrays into a dictionary, exporting multiple versions that either exclude the initial ``learning'' trials or retain them.
+
+\subsubsection{Experiment~2: Differential Conditioning}
+Here, since the experiment has a differential conditioning setup, two separate \texttt{CS} types (\texttt{CS+} and \texttt{CS-}) are managed, producing four distance measures: \texttt{d\_per\_p}, \texttt{d\_phy\_p} (for \texttt{CS+}), and \texttt{d\_per\_m}, \texttt{d\_phy\_m} (for \texttt{CS-}).
+The arrays are then managed in \texttt{data\_input\_s2}, similarly producing a dictionary containing \texttt{US} expectancy (\texttt{y}), distances for each \texttt{CS} type, and optionally reinforcement (\texttt{r}), indicator arrays (\texttt{k}). Both with and without learning-trials variants of the dictionaries are pickled to disk.
+
+\subsubsection{Resulting Data Structures}
+In both experiments, the core outputs are Python dictionaries with the following keys:
+\begin{itemize}
+    \item Number of participants (\texttt{Nparticipants}), number of trials (\texttt{Ntrials}), number of learning trials (\texttt{Nactrials}),
+    \item Perceptual (\texttt{d\_per}) and physical distance (\texttt{d\_phy}) arrays for each \texttt{CS},
+    \item \texttt{US} expectancy values (\texttt{y}),
+    \item (Optionally) reinforcement (\texttt{r}) and \texttt{CS} indicator arrays (\texttt{k}).
+\end{itemize}
+
+The resulting Python dictionaries are basically organized datafiles which can be of three types:
+\begin{itemize}
+    \item \textbf{Generalization-only (G)}: excludes all learning trials, retaining only pure generalization data.
+    \item \textbf{Learning + Generalization, non-continuous (LG)}: includes learning trials but treats them as independent events (no carry-over learning).
+    \item \textbf{Learning + Generalization, continuous (CLG)}: includes learning trials with a continuous (cumulative) learning assumption.
+\end{itemize}
+
+All dictionaries are serialized to \texttt{.pkl} files for direct ingestion by PyMC, ensuring that multiple model hypotheses can be tested without rewriting the preprocessing pipeline.
+
+\subsubsection{Data Visualization of the Partially Preprocessed Data \\ (\texttt{Data\_Preprocessing/data\_visualization.py})}
+\label{subsubsec:data_visualization}
+
+In addition to the core preprocessing, the study's original \texttt{R} data visualization code was translated into Python, creating \texttt{data\_visualization.py}. This module relies on \texttt{seaborn} and \texttt{matplotlib.pyplot} to produce diagnostic and exploratory plots from the partially preprocessed data files of the \emph{simple} and \emph{differential} conditioning experiments (\texttt{Data\_s1.pkl}, \texttt{Data\_s2.pkl} in \texttt{Preprocessed\_data/}). These plots provide insights into how participants learned (or did not learn) the associations, how they generalized beyond the conditioned stimuli, and how accurately they perceived stimulus sizes.
+
+The key functions and their roles are described below:
+\begin{description}
+  \item[\texttt{dv\_lr\_gr\_plot}]\hfill\\
+    Generates an \emph{overall} learning curve plot considering only the ``learning trials'' (14 for Experiment~1, 24 for Experiment~2) and focusing on relevant stimuli (\texttt{CS+} and \texttt{CS-}). The function then computes and plots the \emph{average} \texttt{US} expectancy across participants (\texttt{mean\_ac}), as well as each participant's individual mean trace in a lighter shade. 
+
+  \item[\texttt{dv\_lr\_indi\_plot}]\hfill\\
+    Focuses on the \emph{individual participant} level, produces a grid of subplots, where each subplot shows a specific participant's mean \texttt{US} expectancy over the learning trials, for \texttt{CS+} and \texttt{CS-} (if present) stimuli, enabling a direct comparison.
+
+  \item[\texttt{dv\_ge\_gr\_plot}]\hfill\\
+    Focuses on \emph{generalization} beyond the learning trials. Once the code has filtered out the learning trials, it examines multiple stimulus levels (sizes) (\texttt{S4}, \texttt{S5}, \texttt{S6}, \texttt{CS+}, \texttt{S8}, \texttt{S9}, \texttt{S10} in Experiment~1; \texttt{CS+}, \texttt{S2}, \texttt{S3}, \texttt{S4}, \texttt{S5}, \texttt{S6}, \texttt{S7}, \texttt{S8}, \texttt{S9}, \texttt{CS-}, etc. in Experiment~2) to show how \texttt{US} expectancy changes as the stimulus differs from the conditioned one. It plots both an overall mean and the individual-participant means in lighter lines.
+
+  \item[\texttt{dv\_ge\_indi\_plot}]\hfill\\
+    Again, this is a more \emph{individual-level} version of the generalization plots, drawing a multi-subplot layout (one per participant). Each participants' mean \texttt{US} expectancy (with error bars) is plotted across the various stimulus levels that appear after the acquisition phase. This clarifies which participants show broad generalization (high \texttt{US} expectancy for all similar stimuli) versus narrow generalization (steep drop-off in expectancy for stimuli increasingly different from the \texttt{CS+}).
+
+  \item[\texttt{dv\_pe\_gr\_plot}]\hfill\\
+    Visualizes the \emph{perceived} sizes of the stimuli across all participants in aggregate, using \emph{violin} and \emph{scatter} plots. By sorting stimuli in ascending order of physical size and overlaying the distribution of perceived sizes, one can see overall accuracy or biases in perception. For instance, if the \texttt{CS+} is physically in the middle range but gets perceived as consistently larger, it might indicate a bias tied to threat expectancy.
+
+  \item[\texttt{dv\_pe\_indi\_plot}]\hfill\\
+    Explores perception \emph{per-participant}, plotting for each individual the distribution of perceived stimulus sizes with box/violin plots and comparing them to the actual physical size (shown as a red line). This helps highlight whether certain participants have systematic over- or underestimation of sizes across the stimuli set.
+
+  \item[\texttt{dv\_cor\_plot}]\hfill\\
+    Examines the \emph{correlation} between perceived and physical sizes for each participant. In each subplot, a scatterplot shows each stimulus's physical size vs.\ the participant's perceived size; a regression line (via \texttt{seaborn.regplot}) indicates the overall trend. The function then calculates Pearson's \texttt{R} for each participant, annotating it on the plot. This is a direct measure of the degree to which that participant is accurate in discriminating bigger vs.\ smaller stimuli.
+\end{description}
+
+All these plotting functions store their output in \texttt{Plots/Data\_Visualization/}. They do not affect the final PyMC modeling dictionaries. Instead, they provide a thorough descriptive understanding of:
+\begin{itemize}
+    \item How learning progressed over the ''acquisition'' trials (\texttt{dv\_lr\_gr\_plot, dv\_lr\_indi\_plot}).
+    \item How participants generalized responses to novel or intermediate stimuli (\texttt{dv\_ge\_gr\_plot, dv\_ge\_indi\_plot}).
+    \item How accurately participants perceived stimuli (\texttt{dv\_pe\_gr\_plot, dv\_pe\_indi\_plot}).
+    \item Whether perceived sizes correlate well with actual sizes (\texttt{dv\_cor\_plot}).
+\end{itemize}
+
+\subsection{Translating the JAGS Models to PyMC (\texttt{models\_definitions.py})}
+\label{subsec:translating_models}
+
+In the original study, the authors proposed a unified Bayesian formulation for fear generalization that applies to both \emph{simple conditioning} (one CS) and \emph{differential conditioning} (two CSs). Although the data from each experiment differ (one vs.\ two conditioned stimuli), the paper's model description relies on a single set of priors and the same conceptual structure (latent groups, learning rates, generalization parameters, etc.). The JAGS code thus implemented a \emph{common} prior configuration for both experiments. Our goal was to replicate these models in Python/PyMC while preserving that core statistical formulation.
+
+\subsubsection{Overview of Model Variants}
+All models share a core concept of multiple latent groups (e.g.\ overgeneralizers, physical or perceptual generalizers, non-learners). However, they differ along two main axes:
+\begin{enumerate}
+    \item Whether there is a \emph{learning} component (\texttt{L}) that updates associative strength over trials, or only a \emph{generalization} component (\texttt{G}).
+    \item Whether we consider \emph{physical} distance alone (\texttt{PHY}), or both \emph{physical} and \emph{perceptual} distances (denoted \texttt{2D} for two distance dimensions).
+\end{enumerate}
+
+Hence, our naming convention (e.g.\ \texttt{LG2D}, \texttt{G2D}, \texttt{LGPHY}) succinctly indicates:
+\begin{itemize}
+    \item \textbf{G2D}: A \emph{generalization-only} model that uses \emph{two} distances (physical and perceptual) and \emph{three} latent groups (overgeneralizers, physical generalizers, perceptual generalizers).
+    \item \textbf{LG2D}: A \emph{learning + generalization} model with \emph{two} distances and \emph{four} latent groups (adding non-learners to the three in G2D).
+    \item \textbf{LGPHY}: A \emph{learning + generalization} model that focuses on \emph{physical} distance only and retains \emph{three} latent groups (non-learners, overgeneralizers, physical generalizers).
+\end{itemize}
+
+In addition, each model may be prefixed with:
+\begin{itemize}
+    \item \texttt{model\_1v\_}: single-CS (danger CS+) variants.
+    \item \texttt{model\_2v\_}: two-CS (danger CS+ and safety CS-) variants.
+\end{itemize}
+Thus, for instance, \texttt{model\_1v\_LG2D} is a single-CS, learning-generalization model that uses both physical and perceptual distances and has four latent groups, while \texttt{model\_2v\_LGPHY} is a two-CS, learning-generalization model with only physical distances and three latent groups.
+
+\subsubsection{Key Differences from JAGS to PyMC}
+\paragraph{1. Vectorization.} 
+JAGS typically processes each participant and trial via nested loops (as seen in the original code snippet below). In PyMC, we often apply vectorized operations over participants (\texttt{Nparticipants}) and trials (\texttt{Ntrials}). For instance, the expression:
+\begin{lstlisting}
+for (i in 1:Nparticipants) {
+  for (j in 1:Ntrials) {
+    ...
+    theta [i,j] <- A + (K-A) / (1 + exp (- (w0 [i] + w1 [i] * g [i,j])))
+    ...
+  }
+}
+\end{lstlisting}
+in JAGS becomes array-based arithmetic in PyMC, with \texttt{tensor} structures representing all participants/trials in one or two arrays:
+\begin{lstlisting}[language=Python]
+...
+theta = 1 + (10 - 1) / (1 + pm.math.exp(-(w0[:, None] + w1[:, None] * g)))
+...
+\end{lstlisting}
+
+\paragraph{2. Using \texttt{scan} to Replace Nested Loops.} 
+Some aspects of the model particularly the \emph{trial-by-trial} update of an associative strength \texttt{v} cannot be fully vectorized over the trial dimension. In JAGS, this logic appears as nested loops for participants and trials:
+
+\begin{lstlisting}
+v[i, j+1] <- ifelse( ... ,
+                     v[i,j] + alpha[i] * (r[i,j] - v[i,j]),
+                     ...)
+\end{lstlisting}
+
+In PyMC, we replace these loops with \texttt{pytensor.scan}, which steps iteratively over a specified dimension while preserving the computational graph for gradient-based sampling. Since \texttt{scan} processes its \texttt{sequences} parameter along the \texttt{axis=0} dimension, we transpose the \texttt{k} and \texttt{r} arrays (originally \(\texttt{(Nparticipants, Ntrials)}\)) into shape \(\texttt{(Ntrials, Nparticipants)}\). This ensures each scan iteration corresponds directly to a \emph{single trial across all participants}, rather than scanning one participant at a time. The code snippet below illustrates:
+
+\begin{lstlisting}[language=Python]
+def trial_update(k_t, r_t, v_t, alpha, gp):
+    v_next = v_t + alpha * (r_t - v_t) * k_t
+    return v_next
+
+v_seq, _ = pm.scan(
+    fn=trial_update,
+    sequences=[k.T, r.T],   # Transposed so each iteration is one trial
+    outputs_info=v_init,
+    non_sequences=alpha[None,:]
+)
+v = v_seq.squeeze(1).T
+\end{lstlisting}
+
+This approach avoids writing an explicit Python loop over trials (and/or participants), while retaining the stepwise, sequential nature of the learning update found in the original JAGS model.
+
+\paragraph{3. Removing Non-Theoretical Truncations}
+The JAGS code introduced numerous bounds like \texttt{T(1e-9, )} or \texttt{T(1, )} on parameters (e.g.\ \(\alpha_1\), \(\alpha_\mu\), \(\texttt{w1\_1}\), \(\texttt{d\_sigma}\)). However, the original \emph{paper's} model formulation did \emph{not} require these truncations researchers had added them in JAGS to prevent zero or negative draws in certain scale parameters. In practice, these bounds complicated the posterior geometry in PyMC, causing sampling pathologies. We thus removed such constraints unless they were explicitly stated in the theoretical description. Concretely:
+\begin{itemize}
+    \item \textbf{Retained truncations}: 
+          \(\lambda_1\), \(\lambda_2\) remain \texttt{TruncatedNormal}, because the original theory required positive or bounded values for the generalization-rate parameters.
+    \item \textbf{Removed or relaxed}: 
+          All other \texttt{T(...)} constraints on \(\alpha_1\), \(\alpha_\mu\), \(\texttt{w1\_a}\), \(\texttt{w1\_b}\), \(\texttt{w1\_1}\), and \(\texttt{d\_sigma}\). None were mandated by the published statistical formulation, and their removal eased numeric issues in PyMC's HMC sampling.
+\end{itemize}
+
+\paragraph{4. Prior \& parameterisation refinements.}  
+While replicating the JAGS priors verbatim is \emph{possible}, several of them created hard \(0\,/\,\infty\) gradients that slowed down No-U-Turn Sampling, produced large tree depths and/or divergences. Below is listed every change that was eventually adopted together with the principled reason \emph{why} it probably improved HMC geometry.
+
+\begin{itemize}
+    \item \textbf{Gamma hyperparameters for the slope $w_1$: $w1_a, w1_b$.}
+          The original JAGS used $\mathrm{HalfCauchy}(2)$ for both the \emph{shape-rate} hyperparameters of $\Gamma(\alpha{=}w1_a,\beta{=}w1_b)$. In PyMC/NUTS these Cauchy tails frequently generate very large hyper-draws, which in turn yield extreme $\alpha$/$\beta$ combinations and sharp curvature in the $\Gamma$ density. We replaced them with $\mathrm{Half\text{-}Student\text{-}t}(\nu{=}2,\sigma{=}2)$.
+          This keeps heavy tails (so large slopes remain a priori possible) but is less extreme than Cauchy, reducing occasional “blow-ups” in $w_1$ and improving adaptation. Empirically this removed divergences while leaving posterior  flexibility intact.
+  
+    \item \textbf{Hierarchical baseline response $w_0$ (non-centred) and its scale.}
+          We retain the non-centred parameterisation $w_{0,i}=\mu_{w_0}+\sigma_{w_0}\,\text{raw}_i$ with $\text{raw}_i\sim\mathcal N(0,1)$ to break the usual $\mu\text{-}\sigma$ funnel. 
+          In addition, we changed the group-level scale prior from $\mathrm{HalfCauchy}(2)$ to $\mathrm{Half\text{-}Student\text{-}t}(\nu{=}2,\sigma{=}2)$. The relatively lighter tail trimmed the frequency of extremely large $\sigma_{w_0}$, improving NUTS geometry, removing divergences and increasing effective sample sizes.%
+  
+    \item \textbf{Participant-specific response noise $\sigma_i$.}
+          The JAGS model used two disjoint uniforms \([10^{-9},1.5]\) and \([1.5,3]\) with a hard boundary at \(1.5\). Hard walls and piecewise densities tend to produce jagged gradients and the discontinuity at 1.5 also introduces awkward, non-smooth behaviour.
+          In PyMC a smooth, participant-level hierarchy was used:
+          \[
+            \sigma_{\text{mean,learners}} \sim \mathcal N(0.75,\,0.2),\quad
+            \sigma_{\text{mean,nonlearners}} \sim \mathcal N(2.25,\,0.2),
+          \]
+          \[
+            \sigma_{\mu,i} = 
+            \begin{cases}
+              \sigma_{\text{mean,nonlearners}}, & gp_i=0\\
+              \sigma_{\text{mean,learners}}, & gp_i\in\{1,2,3\}
+            \end{cases},
+            \qquad
+            \sigma_{\text{scatter}} \sim \mathrm{HalfNormal}(1.5),
+          \]
+          \[
+            \sigma_i \sim \mathrm{TruncatedNormal}\!\big(
+              \mu=\sigma_{\mu,i},\,\sigma=\sigma_{\text{scatter}};
+              \text{lower}=10^{-9},\,\text{upper}=3
+            \big).
+          \]
+          This provided smooth, positive support on $(0,3)$, partial pooling across participants (i), and no hard boundary at 1.5, while still differentiating between learners (Overgeneralizers, Physical Generalizers, Perceptual Generalizers) and Non-learners. 
+          Probably, because $\sigma_i$ is the likelihood scale, in PyMC, removing hard boundaries and sharing information stabilised adaptation (fewer divergences), improved effective sample sizes, and yielded more coherent PPCs than the slab prior.
+  \end{itemize}
+\noindent
+\emph{Practical note.}
+The final choices above were arrived at via iterative prior-predictive, posterior-predictive, and convergence checks with small, isolated edits starting from the original JAGS formulation, with the goal of minimising divergences, keeping $\hat{R}\!\approx\!1$, maximising ESS, and preserving reasonable PPCs.
+Along the way multiple alternatives were tested, such as: for $\lambda$ (group and participant levels), non-centred parameterisations, soft-truncated hierarchies; for $\sigma$ (likelihood scale), two-scatter variant, ordered centre/width parameterisations, two group-level priors with no per-participant pooling; for $w_0$, centred vs. non-centred hierarchies, $\mathrm{HalfCauchy}$ vs.\ $\mathrm{Half\text{-}Student\text{-}t}$ scales; for $w_1$, Gamma with $(w1_a,w1_b)$ hyperpriors vs. hierarchical log-normal and mean-sigma reparameterisations. It was also tried a marginalised mixture (integrating out $gp$ via \texttt{pm.Mixture}) that just slowed sampling with no benefits. While some options improved pair-plot aesthetics (e.g., reduced boundary piling) they typically slowed sampling and/or hurt PPCs. The configuration reported here yielded the most favourable overall trade-off (ESS, $\hat{R}$, zero-divergences, and predictive fit) across both the single-CS and two-CS models. 
+Consistent with the original paper and the original JAGS models, another guiding design goal was to keep \emph{the same} prior families, parameterisations, and graphical model structure across the single-CS (simple conditioning) and two-CS (differential conditioning) variants, so any differences in fit stem from the data/likelihood rather than shifting priors.
+
+\paragraph{5. Expressing conditional logic: \texttt{switch} vs.\ boolean masks.}
+In the original JAGS code many deterministic relations (including the trial-wise learning update) were written with \texttt{ifelse}. Our first PyMC translation mirrored that via \texttt{pm.math.switch}/\texttt{pt.where}. We then refactored several of those into simple boolean-mask algebra (e.g.\ \[
+  \alpha_i
+  \;=\;
+  \mathbf{1}\{gp_i = 0\}\cdot 0
+  \;+\;
+  \mathbf{1}\{gp_i \neq 0\}\cdot \alpha_{1,i}
+\]
+). Functionally these forms are equivalent for the models, and modern PyTensor evaluates both branches of a \texttt{switch}/\texttt{where} during gradient steps anyway, so masks do not “avoid computing” inactive branches nor prevent domain errors in the masked path. In the runs this refactor had no consistent impact on posterior results and, at most, a modest reduction in graph size/compile time. The mask style was kept primarily for shape clarity (broadcasting) and readability, not because it was required for convergence.
+
+\subsubsection{Fitting the Models (\texttt{run\_pymc.py})}
+All models defined in \texttt{models\_definitions.py} (e.g., \texttt{model\_1v\_LG2D}, \texttt{model\_2v\_LGPHY}, etc.) are sampled via the \texttt{run\_pymc.py} script. This script is itself a Python translation of the \emph{original R sampling code}, preserving the same overall workflow but adapted for PyMC's inference engine. It provides a function \texttt{sampling\_fun}, which:
+
+\begin{enumerate}
+    \item Dynamically imports the requested model from \texttt{models\_definitions.py} (using \texttt{importlib}).
+    \item Instantiates and initializes the model with a given \texttt{datafile}.
+    \item Creates directories for storing the model's graph (\texttt{Model\_graphs}) and sampler outputs (\texttt{Fitting\_results}).
+    \item Executes \texttt{pm.sample(...)} with an appropriate combination of step methods:
+          \begin{itemize}
+              \item \textbf{Discrete variables (latent group indicators)} sampled via \texttt{CategoricalGibbsMetropolis}.
+              \item \textbf{Continuous variables} sampled via \texttt{NUTS} (No-U-Turn Sampler).
+          \end{itemize}
+          Alternative approaches such as Metropolis, Slice sampling, and even \texttt{pm.sample\_smc} for Sequential Monte Carlo were tried. However, these methods often encountered stability issues, threw warnings, or produced prohibitively slow sampling for these high-dimensional models. Despite being gradient-based (and thus differing from the original JAGS implementation's mix of Gibbs, random-walk Metropolis, and slice sampling), \texttt{NUTS} ultimately delivered the most robust sampling performance in the PyMC setup.
+    \item Saves the resulting \texttt{arviz.InferenceData} (including posterior and posterior predictive samples) to disk for subsequent analysis.
+\end{enumerate}
+
+By running this function for each desired model name (e.g., \texttt{model\_1v\_LG2D}, \texttt{model\_2v\_G2D}) and data set (simple or differential conditioning), the full sampling pipeline was replicated, much like in the original R scripts only now in Python, with PyMC's sampling mechanics.
+
+\paragraph{Sampler settings and run lengths.}
+All experimental data fits (\(N_{\text{participants}}\approx 40\)) were finally run with \(\texttt{chains}=4\), \(\texttt{tune}=10{,}000\), \(\texttt{draws}=10{,}000\), and \(\texttt{target\_accept}=0.97\). For the simulated dataset described in ~\ref{subsubsec:simulation_2} (\(N_{\text{participants}}=200\)), in the last runs was used \(\texttt{chains}=4\), \(\texttt{tune}=3{,}000\), \(\texttt{draws}=3{,}000\) (\(\texttt{target\_accept}=0.97\) as well). The larger simulated dataset increases the cost for NUTS, so a shorter runs were used due to memory constraints and practical reasons.
+
+For reference, the original JAGS runs used \(\texttt{draws}=25{,}000\) after \(\texttt{burn-in}=75{,}000\). Because JAGS combines Gibbs, random-walk Metropolis, and slice updates, it typically requires more iterations to reach an ESS comparable to NUTS. By contrast, gradient-based NUTS often attains higher ESS per iteration, so fewer draws should suffice.
+
+\emph{Longer} PyMC runs on \emph{earlier prototypes} of the models were also tested (\(\texttt{draws}=20{,}000\), \(\texttt{tune}=30{,}000\)) for the experimental datasets. Posterior summaries, \(\hat R\), ESS, and PPCs were essentially unchanged compared with \(\texttt{draws}=10{,}000\), \(\texttt{tune}=10{,}000\) (and, in many cases, \(\texttt{draws}=5{,}000\), \(\texttt{tune}=5{,}000\)), while wall-clock time increased substantially. Hence, for the \emph{final} models reported here, we adopted the settings above as a pragmatic balance of precision and compute.
+
+That said, it is not impossible that \emph{longer} PyMC runs (e.g. modestly increasing \(\texttt{draws}\) and \(\texttt{tune}\), or \(\texttt{target\_accept}\)) could yield small improvements, especially for parameters with weaker identifiability and in the differential-conditioning model.
+
+\subsection{Analysis}
+\label{subsec:analysis}
+
+After fitting each PyMC model to the experimental data, we conducted a series of analyses to interpret and validate the model outcomes. The code for these analyses is largely a direct Python translation of the original \texttt{R} scripts from the study's repository (\href{https://osf.io/sxjak/}{osf.io/sxjak/}), ensuring comparable functionality and consistency with the researchers' prior work.
+
+The analysis focuses on the results of the \emph{full} models for both \textbf{simple conditioning} (\texttt{model\_1v\_LG2D}) and \textbf{differential conditioning} (\texttt{model\_2v\_LG2D}), each using the assumption of \emph{continuous learning plus generalization ``CLG``} dataset. These fitting results (e.g., \texttt{Results\_Study1\_CLG2D\.nc} and \texttt{Results\_Study2\_CLG2D\.nc}) serve as our main source for parameter estimates, posterior predictive checks, and latent group allocations.
+
+The scripts leverage \texttt{arviz}, \texttt{matplotlib}, and \texttt{seaborn} to generate plots that are then saved to the \texttt{Plots} directory. The Python-based analysis includes the following steps:
+
+\begin{itemize}
+    \item \textbf{Extracting latent group allocations} for each participant, based on posterior samples of the discrete group indicator parameter.
+    \item \textbf{Evaluating convergence} using standard MCMC diagnostics (rank-normalized \(\hat{R}\), effective sample sizes, trace plots).
+    \item \textbf{Running posterior predictive checks} to determine how well the models reproduce observed data and highlight any systematic discrepancies.
+    \item \textbf{Examining key estimated parameters} (learning rates, generalization rates, group probabilities) and visualizing them across participants.
+    \item \textbf{Examining response patterns} (generalization, learning, perception, similarity) across trials, participants, and latent groups.
+\end{itemize}
+
+In the following, it is detailed each step of the analysis for the single-CS (\emph{simple conditioning}) and two-CS (\emph{differential conditioning}) datasets under the continuous-learning-plus-generalization (CLG) assumption.
+
+\subsubsection{Convergence Diagnostics (\texttt{Analysis/convergence.py})}
+\label{subsubsec:convergence}
+
+The \texttt{convergence.py} module performs posterior convergence checks for the Bayesian CLG2D fits of both studies (simple conditioning, differential conditioning). It loads precomputed \texttt{ArviZ InferenceData} files, prints numerical diagnostics (\(\hat R\), bulk/tail ESS), counts divergences, and produces compact visual diagnostics (trace, density and pair plots) for priors and hyperpriors.
+
+\begin{itemize}
+    \item \textbf{Inputs and artifacts:} netCDF files for Study~1 and Study~2 fits (\texttt{az.from\_netcdf}), plus the experiments' metadata for labelling figures.
+    \item \textbf{Numerical diagnostics:} per-experiment \(\hat R\) and effective sample sizes (ESS) for the main priors and hyperpriors; reporting also includes mixture weights \(\pi\), and participant level quantities (\(\sigma, \alpha, \lambda, w_0, w_1\)).
+    \item \textbf{Divergences:} the total number of NUTS divergences is printed.
+    \item \textbf{Visual diagnostics:} for each parameter set, compact \emph{trace+density} plots (alignment across chains, mixing) and \emph{pair plots} (shape of joint posteriors, ridge structure) are saved.
+    \item \textbf{Output location:} all figures are written to \texttt{Plots/Convergence/}.
+\end{itemize}
+
+\paragraph{Key Functionalities and Corresponding Functions.}
+\begin{description}
+    \item[\texttt{convergence\_plots}]\hfill\\
+    Given a dictionary of \texttt{InferenceData} objects and named parameter sets, this function iterates over experiments and draws:
+    \begin{itemize}
+        \item \emph{Trace+density} panels for the selected priors and hyperpriors (compact layout, divergences marked).
+        \item \emph{Pair plots} for higher-level hyperpriors (including \texttt{sigma\_mean\_learners}, \texttt{sigma\_mean\_nonlearners}) to visualise posterior correlation structure and potential ridges.
+    \end{itemize}
+    Plots are saved with experiment-specific filenames.
+\end{description}
+
+\paragraph{Empirical Convergence Summary (Posterior).}
+\begin{itemize}
+    \item \textbf{Experiment~1 (simple conditioning):} Overall looks converged. The vast majority of monitored quantities have \(\hat R \le 1.01\) with bulk/tail ESS typically in the thousands. Trace plots for priors and hyperpriors show good chain overlap and stationarity; posteriors occupy reasonable ranges.
+    \item \textbf{Experiment~2 (differential conditioning):} Convergence is weaker. Several monitored elements show \(\hat R > 1.01\) and noticeably lower ESS. Trace plots for priors/hyperpriors are less well aligned across chains, indicating slower mixing and stronger posterior correlations, consistent with the harder geometry of the two-CS model.
+\end{itemize}
+
+\paragraph{Hyperprior Behaviour in Pair Plots.}
+In both experiments, the pair plots of the hyperpriors reveal that the \emph{uniform} hyperpriors tend to push mass against their bounds: \(\alpha_\kappa\) accumulates near its \emph{upper} bound and \(\lambda_\mu\) near its \emph{lower} bound. We tested replacing these with smooth, unbounded positives (e.g., log-normals or half-normals). This change \emph{visibly improved} the pair plots (less boundary pile-up) but did \emph{not} improve R-hat/ESS or posterior predictive checks; in some runs convergence was slightly worse. For this reason, and to preserve comparability with the original specification, the final analyses reported here retain the original uniform hyperpriors.
+
+\subsubsection{Latent Group Allocation (\texttt{Analysis/group\_allocation.py})}
+\label{subsubsec:group_allocation}
+
+One of the primary analysis steps is to identify the most likely latent group for each participant based on posterior samples of the discrete group indicator (\texttt{gp}). The \texttt{group\_allocation.py} module accomplishes this by:
+\begin{enumerate}
+    \item Loading the final fitting results from \texttt{arviz.InferenceData} objects (stored as \texttt{.nc} files).
+    \item Extracting the MCMC samples of the group indicator variable.
+    \item Computing the proportion of samples in which each participant falls into each group.
+    \item Assigning a \emph{dominant} group if its proportion exceeds a specified threshold (75\%).
+    \item Generating bar plots to visualize the resulting allocations (including an ``Unknown'' label for participants who do not surpass the 75\% criterion).
+\end{enumerate}
+
+\paragraph{Implementation Highlights.}
+The core functions in \texttt{group\_allocation.py} replicate the original \texttt{R} scripts' logic in Python:
+
+\begin{itemize}
+    \item \texttt{process\_sample}: Collapses posterior samples for the latent group indicator across all chains/iterations, calculates per-participant group proportions, flags a dominant group if \(\text{Proportion} > 0.75\), and outputs a \texttt{DataFrame}.
+    \item \texttt{plot\_gp\_allocation}: Produces bar plots of group proportions versus participant number, including a dashed line at the 75\% threshold.
+\end{itemize}
+
+\paragraph{Comparison with the original \texttt{R} and \texttt{JAGS} implementation.}
+Although this module follows the same conceptual logic as the JAGS version, there are notable differences in the final allocations:
+
+\begin{itemize}
+    \item \textbf{Experiment 1 (single CS)}:  
+    The PyMC-based results show a broad spread of \emph{non-learners}, in part because the \emph{simple conditioning} dataset should yields weaker learning compared to the \emph{differential conditioning} one because of the presence of only a single conditioned stimulus CS\(^+\). This does differ from the JAGS implementation's group allocations, which also identified many non-learners but to a somewhat larger degree and with slightly different allocations.
+    \item \textbf{Experiment 2 (two CSs: CS+ and CS-)}:  
+    In contrast, these data promote stronger learning effects overall due to the presence of two conditioned stimuli, so we observe many \emph{physical} and \emph{perceptual generalizers} in the PyMC group allocation results. The original JAGS results for the second experiment tended to highlight an abundance of \emph{perceptual generalizers} over physical generalizers, and very few non-learners, overgeneralizers and "unknown" particiapnts which do not reach the 75\% threshold. The PyMC-based result still finds a high concentration in the generalizer groups, albeit with a somewhat different balance between physical and perceptual generalizers, doesn't find any non-learner and allocates more individuals in the "unknown" group (7 vs 4 of JAGS).
+\end{itemize}
+
+Such deviations are not unexpected given:
+\begin{enumerate}
+    \item The PyMC-based implementation uses \texttt{NUTS} for continuous variables rather than JAGS's mix of Gibbs, random-walk Metropolis, and slice sampling.
+    \item Certain artificial truncations present in the JAGS code were removed, which can shift posterior modes.
+    \item The changes in priors and parameterisation that were applied to adapt the original model to the PyMC framework.
+\end{enumerate}
+Despite these differences, the qualitative patterns e.g.\ more non-learners in a single-CS environment, more generalization and learning among participants in a two-CS environment largely replicate the core findings of the original study.
+
+\subsubsection{Posterior Predictive Checks (\texttt{Analysis/posterior\_predictive\_checks.py})}
+\label{subsubsec:posterior_predictive_checks}
+
+An essential part of any Bayesian modeling workflow is assessing how well the model's predictions match the observed data. The \texttt{posterior\_predictive\_checks.py} module provides a range of plotting functions for these \emph{posterior predictive checks}, mirroring the original \texttt{R} scripts in both logic and structure. The functions first randomly subsample from the posterior predictive distribution (\(\texttt{y\_pre}\)) and then, for each relevant stimulus, visualize how closely the model-based predictions align with the actual data, under various grouping and conditioning scenarios. 
+
+\paragraph{Key Functionalities and Corresponding Functions.}
+\begin{description}
+    \item[\texttt{ppc\_plot}]\hfill\\
+    Helper function that creates quantile- and mean-based comparisons of the \emph{observed} vs.\ \emph{predicted} data for a \textbf{single study}. It computes quantiles (e.g.\ 10\%, 30\%, 70\%, 90\%) and mean in both the predicted and observed data, allowing a check of whether the model captures the major distributional features per stimulus.
+
+    \item[\texttt{ppc\_plot\_both}]\hfill\\
+    Extends \texttt{ppc\_plot} to visualize \textbf{two studies} at once (e.g., single-CS vs.\ two-CS experiments). It arranges the subplots created by \texttt{ppc\_plot} for each experiment side by side, creating an unified figure that is then saved to visually compare the two experiments.
+
+    \item[\texttt{ppc\_plot\_gr}]\hfill\\ 
+    Helper function that focuses on \textbf{group-level} PPC by participant \emph{dominant group}. It divides participants according to their assigned group and creates plots of quantiles for each group, stimulus by stimulus.
+
+    \item[\texttt{ppc\_plot\_gr\_both}]\hfill\\
+    Combines the logic of \texttt{ppc\_plot\_gr} with the dual-experiment approach of \texttt{ppc\_plot\_both}, enabling a \textbf{group-level} PPC comparison across both simple and differential conditioning experiments. It arranges the subplots for each group in each experiment created by \texttt{ppc\_plot\_gr}, then generates and saves a unified figure.
+
+    \item[\texttt{ppc\_plot\_indi}]\hfill\\
+    Produces and saves a figure containing \textbf{participant-by-participant} series of mean-based plots. For each individual, it plots the average predicted value vs.\ the average observed US expectancy per stimulus, and shows the allocated group. This fine-grained check is useful for diagnosing any specific participant whose data deviate sharply from typical patterns or from the model's predictions.
+\end{description}
+
+\paragraph{Comparison with the original \texttt{R} and \texttt{JAGS} implementation.}
+\begin{itemize}
+    \item \emph{General PPC:} Overall, our global predictive checks (\texttt{ppc\_plot\_both}) yield results very similar to those in the JAGS-based analysis, differing only slightly in some stimulus-specific quantiles.  
+    \item \emph{Group PPC:} By contrast, the \texttt{ppc\_plot\_gr} graphs show more notable divergences, reflecting the fact that the PyMC approach sometimes allocates participants to different latent groups than the original JAGS approach, and in the case of \textbf{Experiment~2} (differential conditioning) doesn't allocate any participant in the non-leaners group. Consequently, the group-by-group traces do not align with JAGS's ones.  
+    \item \emph{Individual PPC:} The participant-level checks (\texttt{ppc\_plot\_indi}) resemble the JAGS outputs for most individuals. In \textbf{Experiment~1} (simple conditioning), the PyMC version arguably yields slightly better fits for some participants' US expectancy (e.g. participant 10 and 24). Meanwhile, \textbf{Experiment~2} (differential conditioning) remains close overall, except that JAGS appears to better capture: responses to smaller stimuli (i.e.\ CS\(^+\) and close stimuli for participants 10, 17, 20, 23, 32, 39), and overall responses of some specific individuals (21, 26, 29, 30, 37).
+\end{itemize}
+
+Overall, these posterior predictive checks confirm that the PyMC-based models perform slightly worse than JAGS on a global scale, while individual discrepancies arise probably from differences in sampling methods, prior differences, and subsequent group allocations. The final plots are all stored in the \texttt{Plots/Posterior Predictive Checks/} directory.
+
+\subsubsection{Parameter Estimation (\texttt{Analysis/parameter\_estimation.py})}
+\label{subsubsec:param_estimation}
+
+The Bayesian models revolve around key parameters like the learning rate (\(\alpha\)), generalization rate (\(\lambda\)), and group probabilities (\(\pi\)). To facilitate a deeper understanding of these parameters' distributions, once again by closely mirroring the original \texttt{R} analysis scripts, a \texttt{parameter\_estimation.py} module was developed in Pyhton.
+
+\paragraph{Key Functionalities and Corresponding Functions.}
+\begin{description}
+    \item[\texttt{pe\_data\_indi}]\hfill\\
+    Processes single-study data at the \textbf{individual-participant level}. It extracts \(\alpha\) and \(\lambda\) from the posterior, computes quantiles (\(2.5\%, 25\%, 50\%, 75\%, 97.5\%\)), and merges these with the participant's group allocation, forming the basis for participant-level parameter plots.
+
+    \item[\texttt{pe\_plot\_indi}]\hfill\\ 
+    Consumes the quantile-based DataFrame from \texttt{pe\_data\_indi}, generating scatter plots with error bars and a median point for each participant's parameter. Participants are colored by their dominant group, making it straightforward to see how each group's parameter estimates compare.
+
+    \item[\texttt{pe\_plot\_indi\_both}]\hfill\\ 
+    Extends \texttt{pe\_plot\_indi} to handle data from \textbf{both experiments} simultaneously. It arranges subplots for the simple-conditioning vs.\ differential-conditioning results, facilitating direct visual comparisons of how \(\alpha\) and \(\lambda\) differ between the single-CS and two-CS setups by generating and saving an unified figure.
+
+    \item[\texttt{pe\_data\_gr}]\hfill\\ 
+    Gathers "hyperparameters" data from the posterior of both studies, for the mean of the learning rate \(\alpha_\mu\), mean of the generalization rate \(\lambda_\mu\), and group probabilities (\(\pi\)), then organizes these values in a format suitable for multi-study plotting.
+
+    \item[\texttt{pe\_plot\_gr}]\hfill\\
+    Generates violin plots for the data organized by \texttt{pe\_data\_gr}. It creates and saves an unified figure, that reveals how each hyperparameter's distribution spreads across participants in the simple-conditioning (study 1) and differential-conditioning (study 2) scenarios.
+\end{description}
+
+\paragraph{Comparison with the Original \texttt{R} Implementation.}
+\begin{itemize}
+    \item \emph{Computations and Plotting}: The Python code replicates the same calculations and processing used in the original \texttt{R} scripts, ensuring consistent analysis. The violin and strip plots closely mimic the \texttt{R} version, albeit with the \texttt{matplotlib}/\texttt{seaborn} aesthetics.
+    \item \emph{Differences}: As with other modules, participants' group assignments differ from JAGS, meaning that the parameter values in Python might not identically match the ones in \texttt{R}. Nonetheless, the overarching patterns (like the approximate location of \(\alpha\) and \(\lambda\)) remain consistent with the original study's ones.
+\end{itemize}
+
+All parameter-estimation plots produced here are saved to \texttt{Plots/Parameter\_Estimation/}.
+
+\subsubsection{Response Patterns (\texttt{Analysis/response\_patterns.py})}
+\label{subsubsec:response_patterns}
+
+The \texttt{response\_patterns.py} module primarily addresses how participants' behavior evolves over trials and across stimuli, focusing on a variety of \emph{observed} and \emph{simulated} measures:
+\begin{itemize}
+    \item \textbf{Generalization data}: US expectancy across stimuli in the datasets.
+    \item \textbf{Learning data}: observed US expectancy and associative strengths \texttt{v} adjustments over trials for conditioned stimuli \texttt{CS+} (and \texttt{CS-} in the differential conditioning).
+    \item \textbf{Perception data}: perceptual stimuli distances from \texttt{CS+}.
+    \item \textbf{Similarity data}: ''similarity to CS+'' measure produced by the interaction between participants' posterior \(\lambda\) generalization rate and perceptual or physical distances.
+\end{itemize}
+This module translates the original \texttt{R} code, producing multiple plots that help identify whether participants \emph{learned}, how they \emph{generalized} and \emph{perceived} the stimuli.
+
+\paragraph{Key Functionalities and Corresponding Functions.}
+\begin{description}
+    \item[\texttt{rp\_process\_data}]\hfill\\
+    Merges the raw experimental data with simulated participants' group allocations. It computes stimulus-wise and trial-wise statistics such as mean or standard deviation of US expectancy, perceived stimulus size and perceived stimulus distance from \texttt{CS+} for both individual participants and groups.
+
+    \item[\texttt{ge\_plot / ge\_gr\_plot}]\hfill\\ 
+    Generate and save figures visualizing generalization patterns in the \emph{observed data} for both studies:
+    \begin{itemize}
+        \item \texttt{ge\_plot} focuses on overall US expectancy across stimuli.
+        \item \texttt{ge\_gr\_plot} further breaks out \texttt{ge\_plot} by each participant's dominant group, allowing alook at how generalization differs between groups.
+    \end{itemize}
+
+    \item[\texttt{lr\_gr\_plot}]\hfill\\ 
+    Generates and saves a unified figure for both studies, simple conditioning (single-CS) and differential conditioning (two-CS), showing how US expectancy evolves over \texttt{trials} for \texttt{CS+} (and also \texttt{CS-} for the differential conditioning scenario), both at the group average level and individually.
+
+    \item[\texttt{v\_gr\_plot}]\hfill\\
+    Plots the \textbf{associative strengths v} (\textbf{\(v^{+}\)} relative to \texttt{CS+} and \textbf{\(v^{-}\)} relative to \texttt{CS-}) adjustments over trials, based on participants' posterior \textbf{\(\bm{\alpha}\) learning rate}  values. It visualizes the strengths adjustments at the group average level and at the individual level, and saves a unified figure for both studies.
+
+    \item[\texttt{per\_gr\_mean} \& \texttt{per\_gr\_sd}]\hfill\\
+    Two \emph{helper functions} that individually plot a study's mean or standard deviation of perceived stimulus distance from \texttt{CS+} across stimuli, broken down by participants' dominant group. They allow for group-wise comparisons of either average distance or variability in perception.
+
+    \item[\texttt{per\_gr\_plot}]\hfill\\
+    Combines the outputs of \texttt{per\_gr\_mean} and \texttt{per\_gr\_sd} into a single figure, presenting both the \emph{mean} and \emph{standard deviation} of perceived distance from \texttt{CS+} for a single study.
+
+    \item[\texttt{sim\_gr\_plot}]\hfill\\
+    Computes and plots \textbf{stimulus similarity to CS+ \(\bm{s^{+}} = e^{-\lambda \cdot \text{distance}}\)}, where \(\bm{\lambda}\) are the participants' posterior \textbf{generalization rate} values, and the \emph{distance} metric depends on which group an individual was allocated to:
+    \begin{itemize}
+        \item \textbf{Non-learners}: Hard-coded to a similarity of 1 (since they never update). 
+        \item \textbf{Overgeneralizers}: stimulus similarity to \texttt{CS+} depends on \emph{physical distance} \(s^{+} = e^{-\lambda \cdot d_{phy}^{+}}\).
+        \item \textbf{Physical generalizers}: stimulus similarity to \texttt{CS+}  depends on \emph{physical distance} \(s^{+} = e^{-\lambda \cdot d_{phy}^{+}}\).
+        \item \textbf{Perceptual generalizers}: stimulus similarity to \texttt{CS+} depends on \emph{perceptual distance} \(s^{+} = e^{-\lambda \cdot d_{per}^{+}}\).
+    \end{itemize}
+    The function generates and saves a unified figure for both studies. By plotting these similarities on the x-axis of the distances, we can see, in each conditioning scenario, how each group's theoretical ''similarity'' falls off with \texttt{CS+} distances.
+\end{description}
+
+\paragraph{Comparison with the original \texttt{R} and \texttt{JAGS} implementation.}
+\begin{itemize}
+    \item \emph{Overall Patterns}: Despite some group-allocation differences (see Section~\ref{subsubsec:group_allocation}), the primary \emph{learning}, \emph{generalization} and \emph{similarity} patterns looks broadly similar to the original JAGS outputs (except for the Non-learners group of the second study to which no participants were allocated to by the PYMC model). For example in both the Python/PyMC and \texttt{R}/\texttt{JAGS} implementations:
+    \begin{itemize}
+        \item \textbf{Non-Learners} remain zero in the associative strength plot for the first study.
+        \item \textbf{Overgeneralizers} show overlap between \texttt{CS+} and \texttt{CS-} response over trials in the learning plot of the differential conditioning study.
+        \item \textbf{Physical/Perceptual Generalizers} show great divergence between \texttt{CS+} and \texttt{CS-} response in the learning plot of the second study, and also a great difference between \texttt{v\_plus} and \texttt{v\_minus} associative strengths adjustments over trials.
+        \item \textbf{All four groups} show nearly identical ''distance vs.\ similarity'' patterns in \texttt{sim\_gr\_plot} as they do in the original \texttt{R}/\texttt{JAGS} scripts.
+    \end{itemize}
+    \item \emph{Minor Differences}: Because PyMC's sampling sometimes assigned participants to different groups than JAGS, the group-labeled lines in \texttt{ge\_gr\_plot} might shift. Nonetheless, the same broad trends emerge, e.g. a strong contrast in \texttt{CS+} vs. \texttt{CS-} for physical/perceptual generalizers, while overgeneralizers show minimal difference.
+\end{itemize}
+
+All response-pattern plots are stored in the \texttt{Plots/Response\_Patterns/} directory. Despite some noticeable group-level allocation shifts, the \texttt{Python} and \texttt{R} code produce highly comparable pictures of how participants learn and generalize in both the single-CS and two-CS settings.
+
+\subsection{Simulation}
+\label{subsec:simulation}
+
+In the original study, a simulation-based analysis was performed to illustrate how varying parameter values in the model (learning rates, generalization rates, perceptual variability, and logistic scaling parameters) can influence observed behaviors and affect model performance. The second part of the simulation uses Bayesian analysis and served to check how accurately the model could recover these ''true'' parameters values from synthetic data, and to examine how latent group misallocations might alter inference.
+
+We replicate those simulations in Python, largely following the same logic as the \texttt{R+JAGS} scripts but using PyMC-style sampling and NumPy-based random generation for the pseudo-data.
+
+\subsubsection{Part~1: Illustrating Parameter Effects (\texttt{Simulation/simulation\_1.py})}
+\label{subsubsec:simulation_1}
+
+The module \texttt{simulation\_1.py} corresponds to the first part of the simulation study. Here, the focus is on how individual parameters (learning rate \(\alpha\), generalization rate \(\lambda\), perceptual noise, etc.) shape the outcome patterns in a controlled synthetic dataset. Specifically:
+
+\paragraph{Key Aims.}
+\begin{enumerate}
+    \item \emph{Demonstrate} the influence of different parameter settings e.g.\ ''high'' vs.\ ''low'' \(\alpha\), ''high'' vs.\ ''low'' \(\lambda\), or differing perceptual variability on trial-by-trial associative learning and stimulus generalization.
+    \item \emph{Visualize} how logistic scaling with different \texttt{w0}/\texttt{w1} parameters affects the models's predicted response function.
+\end{enumerate}
+
+\paragraph{Key Functionalities and Corresponding Functions.}
+\begin{description}
+    \item[\texttt{lg\_fun}]\hfill\\
+    This ''generative'' function simulates a learning experiment with a user-specified parameters. It produces trial-level data: similarity measures and distances from \texttt{CS+}, whether reinforcement occurred, associative strengths, generalization gradients and final model-based responses. By tweaking \(\alpha\), \(\lambda\), \texttt{persd} (perceptual standard deviation), and \texttt{w1}, \texttt{w0} scaling factors one can observe distinct patterns in the simulated data.
+
+    \item[\texttt{sim\_lr\_plot}, \texttt{sim\_lr\_comp\_plot}]\hfill\\
+    These functions focus on \emph{learning rate} comparisons:
+    \begin{itemize}
+        \item \texttt{sim\_lr\_plot} draws the associative strength across learning trials for given parameters setting, highlighting how quickly \(\texttt{v}\) rises when \(\alpha\) is high vs.\ remains slow when \(\alpha\) is low.
+        \item \texttt{sim\_lr\_comp\_plot} plots and saves the results of two \(\alpha\) values side by side in a unified figure, making it easy to see how ''fast learners'' differ from ''slow learners'' in the same environment.
+    \end{itemize}
+
+    \item[\texttt{sim\_ge\_plot}, \texttt{sim\_ge\_comp\_plot}]\hfill\\
+    These focus on \emph{generalization rate} comparisons, showing how \(\lambda\) generalization rate influences the stimulus similarity to \texttt{CS+} \(s^{+} = e^{-\lambda \dot distance^{+}}\):
+    \begin{itemize}
+        \item \texttt{sim\_ge\_plot} visualizes a single dataset's predicted similarity across various stimuli sizes and trials.
+        \item \texttt{sim\_ge\_comp\_plot} contrasts ''high \(\lambda\)'' vs.\ ''low \(\lambda\)'' simulations by generating and saving an unified figure for both scenarios, highlighting how quickly similarity decays with distance for different participants.
+
+    \end{itemize}
+
+    \item[\texttt{sim\_pervar\_comp\_plot}]\hfill\\
+    Demonstrates the effect of \emph{perceptual variability} (\texttt{persd}): large vs.\ small standard deviations in perceived distance from \texttt{CS+}. By plotting simulated data for ''high \texttt{persd}'' and ''low \texttt{persd}'' in a single unified figure it shows how participants' perceived distance from \texttt{CS+} might scatter more widely in the high-variability scenario, leading to more unpredictable responding.
+
+    \item[\texttt{sim\_logit}]\hfill\\
+    Illustrates the logistic transformation used within the models. Different sets of \texttt{w0} and \texttt{w1} parameters are passed in to see how the predicted output saturates, shifts, or scales with the internal simulated \textbf{generalized strength g} measure. It clarifies how logistic parameters shape the final ''response'' from the generalized associative strength.
+
+\end{description}
+
+\paragraph{Comparison with Original \texttt{R} Scripts.}
+The overall logic-construct trial data, vary parameters, and generate plots of associative strengths and generalization remains the same as in the \texttt{R} code. The discrepancies that appear in the plots are caused by differences in Python and \texttt{R} random number generation.
+
+All simulation plots for \texttt{simulation\_1.py} are saved to the \texttt{Plots/Simulation/} directory. Although they may not match the exact same curves shapes of the original \texttt{R} code, they achieve the same goal: demonstrating how each model parameter influences \emph{simulated} learning and generalization behavior.
+
+\subsubsection{Part~2: Parameter recovery with 200 synthetic participants (\texttt{Simulation/simulation\_2.py})}
+\label{subsubsec:simulation_2}
+
+\texttt{simulation\_2.py} is a \emph{faithful translation} of the original study's \texttt{R} code of the second part of the simulation into Python. While \texttt{simulation\_1.py} changed \emph{one} parameter at a time, the secondsimulation reproduces the \emph{full} recovery experiment reported in the original paper.  Four latent groups are created, each with 50 ``virtual`` participants (\(N = 4 \times 50 = 200\)). For every participant the code draws a complete set of \((\alpha,\lambda,w_0,w_1,\sigma)\) values from the same group-specific generative rules used by the Bayesian models. 
+The synthetic data follow exactly the trial-structure of the \emph{first participant of Experiment 2}, so that the resulting data set can be analysed with the very same models that were designed to fit to the real differential-conditioning experimental dataset.
+
+\paragraph{Key aims.}
+\begin{enumerate}
+    \item \textbf{Identifiability check} verify that the chosen model(s) can recover the ''true'' \(\alpha\) and \(\lambda\) values when they are known by construction.
+    \item \textbf{Group-allocation sanity} confirm that the four latent groups (Non Learners, Overgeneralizers, Physical and Perceptual Generalizers) remain distinguishable in the recovered posterior.
+    \item \textbf{Benchmark for simplified models} compare recovery quality of the full CLG2D model with the two simplified alternatives (\texttt{LGPHY} and \texttt{G2D}).
+\end{enumerate}
+
+\paragraph{Key Functionalities and Corresponding Functions.}
+\begin{description}
+    \item[\texttt{decay\_plot}]\hfill\\ 
+        A quick diagnostic that shows how different values of \(\lambda\) translate into similarity-decay curves. It also picks a ''reasonable'' range for \(\lambda\) (\(\approx0.002\!-\!0.30\)) so that similarity stays between 0.7 and 0.95 at the extreme \texttt{CS+} distances.
+    \item[\texttt{extract\_variable}]\hfill\\  
+        Helper that tiles the fixed stimulus order (and US schedule) from the real experiment dataset so each of the 200 simulated participants sees the \emph{same} sequence.
+    \item[\texttt{lg\_fun}]\hfill\\  
+        The core generator: for every participant and trial it updates excitatory/inhibitory associative strengths (\(v_+\,,v_-\)), computes physical/perceptual similarity, passes the total generalised strength \(g\) through the logistic mapping, and samples the noisy response \(y\).  Returns a long-format data frame with 200 participants x 200 trials.
+    \item[\texttt{lr\_plot}, \texttt{sim\_plot}]\hfill\\
+        Visual sanity checks: (i) associative-strength trajectories during learning; (ii) similarity to CS+ across physical and perceptual distances on generalization trials.
+    \item[\texttt{ge\_plot} \& \texttt{ge\_gr\_plot}]\hfill\\  
+        Show overall and group specific generalization gradients of the synthetic US expectancy ratings.
+    \item[\texttt{prepare\_data\_for\_pymc}]\hfill\\  
+        Reshapes the simulated data into PyMC input dictionaries: one \emph{with} learning (CLG) and one \emph{without} learning (G).
+    \item[\texttt{sampling\_fun}]\hfill\\  
+        Called three times to fit \texttt{CLG2D} (full model) and the two simplified models (\texttt{LGPHY}, \texttt{G2D}) to the synthetic data; each run is saved as a NetCDF trace in \texttt{Fitting\_results/}.
+    \item[\texttt{recovery\_plot}, \texttt{all\_recovery\_plot},
+          \texttt{vs\_recovery\_plot}]\hfill\\  
+        Build the ''true vs inferred'' scatter plots once per model and then side-by-side to quantify how faithfully \(\lambda\) and \(\alpha\) values are recovered.
+\end{description}
+
+\paragraph{Parity with the original \texttt{R} simulation.}
+All three simulation figures the learning (associative strengths), the similarity profile, and the generalized response gradients are visually \emph{near-identical} to their original \texttt{R} counterparts. This close match supports that the Python translation reproduces the intended generative process and trial logic.
+
+\paragraph{Group allocation on simulated data.}
+When fitting the full \texttt{LG2D} model to the simulated dataset, the posterior group-allocation plot shows that \emph{most} participants are reassigned to their generating group (with only a few mismatches), indicating that the four latent classes remain identifiable under the PyMC implementation.
+
+\paragraph{Empirical recovery: PyMC vs.\ original JAGS.}
+With the Python translations of \texttt{CLG2D}, \texttt{LGPHY}, and \texttt{G2D} now fitted, we compare \(\lambda\) recovery:
+\begin{itemize}
+    \item \textbf{CLG2D (\(\lambda\) recovery):} the original JAGS fit places points \emph{closer to the diagonal} than PyMC for essentially all participants, indicating better \(\lambda\) recovery in JAGS.
+    \item \textbf{LGPHY (\(\lambda\) recovery):} as expected (no perceptual distances), JAGS recovers \(\lambda\) for Physical Generalizers, Overgeneralizers, and Non-Learners and not for the Perceptual Generalizers. The PyMC \texttt{LGPHY} fit shows the  same qualitative pattern (perceptual generalizers are worse) but overall the recovered values sits further from the diagonal than JAGS.
+    \item \textbf{G2D (\(\lambda\) recovery) and the JAGS bug:} the original study's JAGS \texttt{G2D} code contains a double-exponential term for the stimulus similarity,
+    \[
+        \exp\!\big(-\lambda[i] \cdot \exp(-\lambda[i]\cdot d)\big),
+    \]
+    which severely harms \(\lambda\) recovery in their G2D results. The PyMC \texttt{G2D} implementation corrects this, yielding \(\lambda\) recovery \emph{similar to the PyMC \texttt{LG2D}} fit rather than the degraded JAGS \texttt{G2D} result from the original figure.
+\end{itemize}
+
+\paragraph{Outputs and reproducibility.}
+All simulation figures are saved under \texttt{Plots/Simulation/Simulation\_part\_2/}; fitted traces are in \texttt{Fitting\_results/}, and the PyMC input dictionaries in \texttt{PYMC\_input\_data/}. The traces can be inspected with \texttt{arviz.summary} and fed to the recovery plotting utilities to replicate all the analysis.
+
+\nocite{*}
+\printbibliography[title={References}]
+
+\end{document}
