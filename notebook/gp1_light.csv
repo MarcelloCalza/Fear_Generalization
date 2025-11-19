@@ -1,0 +1,109 @@
+Participant_Num,Group,Proportion,Group_Name
+1,Non-Learners,0.940875,Non-Learners
+1,Overgeneralizers,0.0072,Non-Learners
+1,Physical Generalizers,0.029925,Non-Learners
+1,Perceptual Generalizers,0.022,Non-Learners
+2,Physical Generalizers,1.0,Physical Generalizers
+3,Non-Learners,0.9075,Non-Learners
+3,Overgeneralizers,0.029875,Non-Learners
+3,Physical Generalizers,0.03665,Non-Learners
+3,Perceptual Generalizers,0.025975,Non-Learners
+4,Physical Generalizers,1.0,Physical Generalizers
+5,Physical Generalizers,1.0,Physical Generalizers
+6,Non-Learners,0.9618,Non-Learners
+6,Overgeneralizers,0.002375,Non-Learners
+6,Physical Generalizers,0.0198,Non-Learners
+6,Perceptual Generalizers,0.016025,Non-Learners
+7,Physical Generalizers,1.0,Physical Generalizers
+8,Non-Learners,0.917675,Non-Learners
+8,Overgeneralizers,0.01475,Non-Learners
+8,Physical Generalizers,0.038975,Non-Learners
+8,Perceptual Generalizers,0.0286,Non-Learners
+9,Overgeneralizers,0.00715,Physical Generalizers
+9,Physical Generalizers,0.991675,Physical Generalizers
+9,Perceptual Generalizers,0.001175,Physical Generalizers
+10,Physical Generalizers,1.0,Physical Generalizers
+11,Overgeneralizers,0.870075,Overgeneralizers
+11,Physical Generalizers,0.0464,Overgeneralizers
+11,Perceptual Generalizers,0.083525,Overgeneralizers
+12,Perceptual Generalizers,1.0,Perceptual Generalizers
+13,Physical Generalizers,1.0,Physical Generalizers
+14,Physical Generalizers,0.292675,Unknown
+14,Perceptual Generalizers,0.707325,Unknown
+15,Physical Generalizers,1.0,Physical Generalizers
+16,Overgeneralizers,0.998375,Overgeneralizers
+16,Physical Generalizers,0.001625,Overgeneralizers
+17,Physical Generalizers,0.947075,Physical Generalizers
+17,Perceptual Generalizers,0.052925,Physical Generalizers
+18,Non-Learners,0.017025,Perceptual Generalizers
+18,Overgeneralizers,5e-05,Perceptual Generalizers
+18,Physical Generalizers,0.001525,Perceptual Generalizers
+18,Perceptual Generalizers,0.9814,Perceptual Generalizers
+19,Non-Learners,0.3218,Unknown
+19,Overgeneralizers,0.444175,Unknown
+19,Physical Generalizers,0.117925,Unknown
+19,Perceptual Generalizers,0.1161,Unknown
+20,Non-Learners,0.838075,Non-Learners
+20,Overgeneralizers,0.08535,Non-Learners
+20,Physical Generalizers,0.058525,Non-Learners
+20,Perceptual Generalizers,0.01805,Non-Learners
+21,Non-Learners,0.016925,Physical Generalizers
+21,Overgeneralizers,0.000125,Physical Generalizers
+21,Physical Generalizers,0.809675,Physical Generalizers
+21,Perceptual Generalizers,0.173275,Physical Generalizers
+22,Physical Generalizers,0.002975,Perceptual Generalizers
+22,Perceptual Generalizers,0.997025,Perceptual Generalizers
+23,Non-Learners,0.7793,Non-Learners
+23,Overgeneralizers,0.17795,Non-Learners
+23,Physical Generalizers,0.0301,Non-Learners
+23,Perceptual Generalizers,0.01265,Non-Learners
+24,Physical Generalizers,0.02,Perceptual Generalizers
+24,Perceptual Generalizers,0.98,Perceptual Generalizers
+25,Non-Learners,0.903425,Non-Learners
+25,Overgeneralizers,0.001375,Non-Learners
+25,Physical Generalizers,0.013325,Non-Learners
+25,Perceptual Generalizers,0.081875,Non-Learners
+26,Perceptual Generalizers,1.0,Perceptual Generalizers
+27,Non-Learners,0.911975,Non-Learners
+27,Overgeneralizers,0.0233,Non-Learners
+27,Physical Generalizers,0.0271,Non-Learners
+27,Perceptual Generalizers,0.037625,Non-Learners
+28,Physical Generalizers,1.0,Physical Generalizers
+29,Physical Generalizers,1.0,Physical Generalizers
+30,Non-Learners,0.860825,Non-Learners
+30,Overgeneralizers,0.023925,Non-Learners
+30,Physical Generalizers,0.10555,Non-Learners
+30,Perceptual Generalizers,0.0097,Non-Learners
+31,Non-Learners,0.7972,Non-Learners
+31,Overgeneralizers,0.056825,Non-Learners
+31,Physical Generalizers,0.134425,Non-Learners
+31,Perceptual Generalizers,0.01155,Non-Learners
+32,Non-Learners,0.609375,Unknown
+32,Overgeneralizers,0.055975,Unknown
+32,Physical Generalizers,0.30085,Unknown
+32,Perceptual Generalizers,0.0338,Unknown
+33,Non-Learners,0.62115,Unknown
+33,Overgeneralizers,0.010625,Unknown
+33,Physical Generalizers,0.33435,Unknown
+33,Perceptual Generalizers,0.033875,Unknown
+34,Non-Learners,0.9437,Non-Learners
+34,Overgeneralizers,0.0039,Non-Learners
+34,Physical Generalizers,0.031225,Non-Learners
+34,Perceptual Generalizers,0.021175,Non-Learners
+35,Physical Generalizers,1.0,Physical Generalizers
+36,Non-Learners,7.5e-05,Overgeneralizers
+36,Overgeneralizers,0.95855,Overgeneralizers
+36,Physical Generalizers,0.031425,Overgeneralizers
+36,Perceptual Generalizers,0.00995,Overgeneralizers
+37,Non-Learners,0.4772,Unknown
+37,Overgeneralizers,0.00155,Unknown
+37,Physical Generalizers,0.003475,Unknown
+37,Perceptual Generalizers,0.517775,Unknown
+38,Overgeneralizers,0.00025,Physical Generalizers
+38,Physical Generalizers,0.99915,Physical Generalizers
+38,Perceptual Generalizers,0.0006,Physical Generalizers
+39,Non-Learners,0.932,Non-Learners
+39,Overgeneralizers,0.0083,Non-Learners
+39,Physical Generalizers,0.011075,Non-Learners
+39,Perceptual Generalizers,0.048625,Non-Learners
+40,Physical Generalizers,1.0,Physical Generalizers
