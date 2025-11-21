@@ -18,3 +18,4 @@ The PyMC models are in the models_definitions module.
 (The results analysis code is in the Analysis folder, the data processing code is in Data_Processing, 
 the code for the simulation is in the Simulation folder.)
 
+Demo notebook: https://colab.research.google.com/drive/1EXEiiHXxEyYGlRl58JsqCd9W2Ml9ng7f#scrollTo=2e141749
