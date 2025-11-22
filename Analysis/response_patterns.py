@@ -635,7 +635,8 @@ lr_gr_plot(processed_data, experiments, RP_dir)
 pymc1 = pickle.load(open("../PYMC_input_data/Data1_PYMCinput_CLG.pkl", "rb"))
 pymc2 = pickle.load(open("../PYMC_input_data/Data2_PYMCinput_CLG.pkl", "rb"))
 
-# Extract alpha parameter samples of both studies from the posterior distributions.
+# Extract and compute the median of alpha learning rate samples from the posterior distributions
+# of both studies.
 alpha = [
     np.nanpercentile(results["s1"]["CLG2D"].posterior["alpha"], 50, axis=0),
     np.nanpercentile(results["s2"]["CLG2D"].posterior["alpha"], 50, axis=0),
@@ -646,7 +647,8 @@ v1 = np.zeros((pymc1["r"].shape[0], pymc1["r"].shape[1] + 1))
 v2_plus = np.zeros((pymc2["r_plus"].shape[0], pymc2["r_plus"].shape[1] + 1))
 v2_minus = np.zeros((pymc2["r_minus"].shape[0], pymc2["r_minus"].shape[1] + 1))
 
-# Fill up the matrix of the first study by computing excitatory associative strength.
+# Fill up the matrix of the first study by computing estimated excitatory associative strength
+# using learning rate median samples.
 for i in range(pymc1["r"].shape[0]):
     for j in range(1, pymc1["r"].shape[1] + 1):
         k = pymc1["k"][i, j - 1]
@@ -655,8 +657,8 @@ for i in range(pymc1["r"].shape[0]):
             v1[i, j - 1] + alpha[0][i] * (r - v1[i, j - 1]) if k == 1 else v1[i, j - 1]
         )
 
-# Fill up the matrices of the second study by computing excitatory and inhibitory
-# associative strengths.
+# Fill up the matrices of the second study by computing estimated excitatory and inhibitory
+# associative strengths using learning rate median samples.
 for i in range(pymc2["r_plus"].shape[0]):
     for j in range(1, pymc2["r_plus"].shape[1] + 1):
         kp = pymc2["k_plus"][i, j - 1]
@@ -674,7 +676,7 @@ for i in range(pymc2["r_plus"].shape[0]):
             else v2_minus[i, j - 1]
         )
 
-# Convert learning matrices to wide format dataframes.
+# Convert associative strengths matrices to wide format dataframes.
 v1 = pd.DataFrame(
     v1[:, 1:], index=np.arange(1, len(v1) + 1), columns=np.arange(1, v1.shape[1])
 )
@@ -701,26 +703,26 @@ v2_minus = v2_minus.reset_index().melt(
 )
 v2_minus.columns = ["Participant_Num", "trials", "vm"]
 
-# Add the learning columns to the processed data for both studies.
+# Add the assocaitive strengths columns to the processed data for both studies.
 processed_data[0] = processed_data[0].merge(v1, on=["Participant_Num", "trials"])
 processed_data[1] = processed_data[1].merge(v2_plus, on=["Participant_Num", "trials"])
 processed_data[1] = processed_data[1].merge(
     v2_minus, on=["Participant_Num", "trials"], suffixes=("_plus", "_minus")
 )
 
-# Create column for the mean of the group learning relative to CS+ (first study).
+# Create column for the mean of the group excitatory associative strength.
 processed_data[0]["mean_vp"] = (
     processed_data[0]
     .groupby(["Group_Name", "trials"], observed=True)["vp"]
     .transform("mean")
 )
-# Create column for the mean of the group learning relative to CS+ (second study).
+# Create column for the mean of the group excitatory associative strength (second study).
 processed_data[1]["mean_vp"] = (
     processed_data[1]
     .groupby(["Group_Name", "trials"], observed=True)["vp"]
     .transform("mean")
 )
-# Create column for the mean of the group learning relative to CS- (second study).
+# Create column for the mean of the group inhibitory associative strength (second study).
 processed_data[1]["mean_vm"] = (
     processed_data[1]
     .groupby(["Group_Name", "trials"], observed=True)["vm"]
@@ -733,7 +735,7 @@ processed_data[1]["mean_vm"] = (
 
 def v_gr_plot(processed_data, experiments, output_dir):
     """
-    Visualizes simulated associative strength adjustments over trials
+    Visualizes simulated estimated associative strength adjustments over trials
     for both CS+ and CS-, showing both group averages and individual trajectories.
 
     Args:
@@ -760,7 +762,7 @@ def v_gr_plot(processed_data, experiments, output_dir):
             # Filter current experiment processed data by the current group.
             group_df = df[df["Group_Name"] == group]
 
-            # Create lineplot for the mean of simulated learning in respect to CS+
+            # Create lineplot for the mean of estimated excitatory associative strength
             # for the current group.
             sns.lineplot(
                 data=group_df,
@@ -773,8 +775,8 @@ def v_gr_plot(processed_data, experiments, output_dir):
                 legend=False,
             )
 
-            # Create lineplots for simulated learning in respect to CS+ for each
-            # participant allocated in the current group.
+            # Create lineplots for the mean of estimated excitatory associative strength 
+            # for each participant allocated in the current group.
             sns.lineplot(
                 data=group_df,
                 x="trials",
@@ -791,7 +793,7 @@ def v_gr_plot(processed_data, experiments, output_dir):
             # Plot for 'vm' if it exists.
             if "mean_vm" in df.columns:
 
-                # Create lineplot for the mean of simulated learning in respect to CS-
+                # Create lineplot for the mean of estimated inhibitory associative strength
                 # for the current group.
                 sns.lineplot(
                     data=group_df,
@@ -804,8 +806,8 @@ def v_gr_plot(processed_data, experiments, output_dir):
                     legend=False,
                 )
 
-                # Create lineplots for simulated learning in respect to CS- for each
-                # participant allocated in the current group.
+                # Create lineplots for the mean of estimated inhibitory associative strength 
+                # for each participant allocated in the current group.
                 sns.lineplot(
                     data=group_df,
                     x="trials",
@@ -1198,8 +1200,8 @@ for i, df in enumerate(processed_data):
 # Plot similarity to CS+ .
 def sim_gr_plot(processed_data, experiments, output_dir):
     """
-    Calculates and plots similarity metrics based on generalization rate
-    influenced by perceptual and physical distances to CS+ stimuli,
+    Calculates and plots estimated similarity metrics based on median generalization 
+    rate samples influenced by perceptual and physical distances to CS+ stimuli,
     differentiated by dominant participants groups.
 
     Args:
@@ -1224,8 +1226,8 @@ def sim_gr_plot(processed_data, experiments, output_dir):
         df = df.loc[df["Group_Name"] != "Unknown"]
         groups = df["Group_Name"].sort_values().unique()
 
-        # Compute similarity to CS+ for the current experiment and add it to the
-        # processed data DataFrame.
+        # Compute estimated similarity to CS+ for the current experiment and add 
+        # it to the processed data DataFrame.
         df["similarity"] = np.where(
             df["Group_Name"] == "Non-Learners",
             1,
@@ -1237,7 +1239,7 @@ def sim_gr_plot(processed_data, experiments, output_dir):
         )
 
         # Create a stim column for the processed data DataFrame of the current
-        # experiment which keeps only relevant stimuli types.
+        # experiment which keeps only relevant stimuli 'types'.
         df["stim"] = np.where(
             df["stimulus"] == "CS+",
             "CS+",
@@ -1256,7 +1258,7 @@ def sim_gr_plot(processed_data, experiments, output_dir):
             # Setup subplot ax.
             ax = axs[exp_index * 4 + i]
 
-            # Create scatter and line plots for physical similarity to CS+.
+            # Create scatter and line plots for physical stimulus distances to CS+.
             sns.lineplot(
                 x=group_data["d_phy_p"] + 10,
                 y="similarity",
@@ -1278,7 +1280,7 @@ def sim_gr_plot(processed_data, experiments, output_dir):
                 legend=False,
             )
 
-            # Create scatter and line plots for perceptual similarity to CS+.
+            # Create scatter and line plots for perceived stimulus similarities to CS+.
             sns.lineplot(
                 x=-group_data["d_per_p"] - 10,
                 y="similarity",
@@ -1377,3 +1379,4 @@ def sim_gr_plot(processed_data, experiments, output_dir):
 
 # Plot similarity to CS+ for each dominant group for both studies.
 sim_gr_plot(processed_data, experiments, RP_dir)
+
