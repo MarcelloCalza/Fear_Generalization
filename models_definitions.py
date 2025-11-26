@@ -213,10 +213,8 @@ def model_1v_LG2D(data):
 
         # Hyperpriors.
         lambda_mu = pm.TruncatedNormal("lambda_mu", lower=0, mu=0.1, sigma=1)
-        # lambda_sigma = pm.LogNormal("lambda_sigma", mu=np.log(0.3), sigma=0.6)
         lambda_sigma = pm.Uniform("lambda_sigma", lower=1e-9, upper=1)
         alpha_mu = pm.Beta("alpha_mu", alpha=1, beta=1)
-        # alpha_kappa = pm.LogNormal("alpha_kappa", mu=np.log(4), sigma=0.5)
         alpha_kappa = pm.Uniform("alpha_kappa", lower=1, upper=10)
         alpha_a = alpha_mu * alpha_kappa
         alpha_b = (1 - alpha_mu) * alpha_kappa
@@ -743,11 +741,9 @@ def model_2v_LG2D(data):
 
         # Hyperpriors.
         lambda_mu = pm.TruncatedNormal("lambda_mu", lower=0, mu=0.1, sigma=1)
-        lambda_sigma = pm.LogNormal("lambda_sigma", mu=np.log(0.3), sigma=0.6)
-        # lambda_sigma = pm.Uniform("lambda_sigma", lower=1e-9, upper=1)
+        lambda_sigma = pm.Uniform("lambda_sigma", lower=1e-9, upper=1)
         alpha_mu = pm.Beta("alpha_mu", alpha=1, beta=1)
-        alpha_kappa = pm.LogNormal("alpha_kappa", mu=np.log(6), sigma=0.5)
-        # alpha_kappa = pm.Uniform("alpha_kappa", lower=1, upper=10)
+        alpha_kappa = pm.Uniform("alpha_kappa", lower=1, upper=10)
         alpha_a = alpha_mu * alpha_kappa
         alpha_b = (1 - alpha_mu) * alpha_kappa
         w1_a = pm.HalfStudentT("w1_a", nu=2, sigma=2)
@@ -1319,3 +1315,4 @@ def marginalized_model(data):
         )
 
         return model
+
